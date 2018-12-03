@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>SU Food Bank</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+
+
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 32%;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
+    <a href="login.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Log In</a>
+    <a href="signup.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Sign Up</a>
+    <a href="reqform.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Request Form</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Admin</a>
+  </div>
+
+</div>
+
+<!-- Header -->
+<header class="w3-container w3-red w3-center" style="padding:128px 16px">
+  <h1 class="w3-margin w3-jumbo">Admin</h1>
+</header>
+
+<!-- First Grid -->
+<div class="w3-row-padding w3-padding-64 w3-container" id="normal" hidden>
+
+      
+      <h1 align="center">Access Denied</h1>
+
+</div>
+
+<div class="w3-row-padding w3-padding-64 w3-container" id="admin">
+  <div class="w3-content">
+      
+      <h1 align="center">Control Panel</h1>
+      
+   
+      <a href="addAdmin.html"><button class="button"><span>Add Admin</span></button></a>
+      <a href="editAdmin.html"><button class="button"><span>Edit Admin</span></button></a>
+      <a href="viewAdmin.html"><button class="button"><span>View Admin</span></button></a>
+
+      <a href="addVolunteer.html"><button class="button"><span>Add Volunteer</span></button></a>
+      <a href="editVolunteer.html"><button class="button"><span>Edit Volunteer</span></button></a>
+      <a href="viewVolunteer.html"><button class="button"><span>View Volunteer</span></button></a>
+      
+      <a href="addClient.html"><button class="button"><span>Add Client</span></button></a>
+      <a href="editClient.html"><button class="button"><span>Edit Client</span></button></a>
+      <a href="viewClient.html"><button class="button"><span>View Client</span></button></a>
+      
+      
+      <a href="addOrder.html"><button class="button"><span>Add Order</span></button></a>
+      <a href="editOrder.html"><button class="button"><span>Edit Order</span></button></a>
+      <a href="viewOrder.html"><button class="button"><span>View Order</span></button></a>
+      
+      
+      <a href="addAppointment.html"><button class="button"><span>Add Appointment</span></button></a>
+      <a href="editAppointment.html"><button class="button"><span>Edit Appointment</span></button></a>
+      <a href="viewAppointment.html"><button class="button"><span>View Appointment</span></button></a>
+      
+      
+      <a href="addInventory.html"><button class="button"><span>Add Inventory</span></button></a>
+      <a href="editInventory.html"><button class="button"><span>Edit Inventory</span></button></a>
+      <a href="viewInventory.html"><button class="button"><span>View Inventory</span></button></a>
+      
+      <a href="addDonor.html"><button class="button"><span>Add Donor</span></button></a>
+      <a href="addSupplier.html"><button class="button"><span>Add Supplier</span></button></a>
+      <a href="addFunds.html"><button class="button"><span>Add Funds</span></button></a>
+      
+  </div>
+</div>
+
+
+
+
+<div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
+    <h1 class="w3-margin w3-xlarge">403-220-6551<br>251 MacEwan Student Centre<br>2500 University Drive NW<br>Canada AB</h1>
+</div>
+
+
+
+
+</body>
+</html>
