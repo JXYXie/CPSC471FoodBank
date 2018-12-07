@@ -1,5 +1,3 @@
-
-
 sqlite3 foodbank.db < foodbank.sql
 
 export FLASK_APP=app.py

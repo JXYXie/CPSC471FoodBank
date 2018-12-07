@@ -8,6 +8,10 @@ app = Flask(__name__)
 def hello_world():
 	return render_template('index.html')
 
+@app.route('/admin')
+def admin():
+	return render_template('admin.html')
+
 @app.route('/login')
 def login():
 	return render_template('login.html')
@@ -15,6 +19,10 @@ def login():
 @app.route('/signup')
 def signup():
 	return render_template('signup.html')
+
+@app.route('/reqform')
+def reqform():
+	return render_template('reqform.html')
 
 @app.route('/register', methods=['POST'])
 def addUser():
@@ -27,10 +35,11 @@ def addUser():
 
 	# TODO: put datat in
 	c.execute(
-		"INSERT INTO Account (username, email, accesslevel, password) VALUES ('{name}', '{email}', {accesslevel}, '{password}')".format(
+		"INSERT INTO Account (username, email, accesslevel, password, userid) VALUES ('{name}', '{email}', {accesslevel}, '{password}', '{userid}')".format(
 			name=request.form['username'],
 			email=request.form['email'], accesslevel=1,
-			password=request.form['password']))
+			password=request.form['password'],
+			userid=request.form['userid']))
 	
 	conn.commit()
 	conn.close()
