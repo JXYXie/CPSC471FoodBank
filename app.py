@@ -104,7 +104,7 @@ def addClientUser():
 
 	# TODO: put datat in
 	c.execute(
-		"INSERT INTO Account (username, email, accesslevel, password, userid) VALUES ('{name}', '{email}', {accesslevel}, '{password}', '{userid}')".format(
+		"INSERT INTO Account (username, email, accesslevel, password, userid) VALUES ('{name}', '{email}', {accesslevel}, '{password}', {userid})".format(
 			name=request.form['username'],
 			email=request.form['email'], accesslevel=1,
 			password=request.form['password'],

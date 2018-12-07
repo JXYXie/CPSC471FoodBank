@@ -2,13 +2,13 @@
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE Admin(
-    id				INTEGER PRIMARY KEY NOT NULL,
+    id				INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name            TEXT,
     phonenumber		TEXT
 );
 
 CREATE TABLE Volunteer(
-    id              INTEGER PRIMARY KEY NOT NULL,
+    id              INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name            TEXT,
     phonenumber		TEXT,
     availability    TEXT,
@@ -17,7 +17,7 @@ CREATE TABLE Volunteer(
 );
 
 CREATE TABLE Client( 
-    id              INTEGER PRIMARY KEY NOT NULL,
+    id              INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name            TEXT,
     income 		    INTEGER,
     accountid 	    INTEGER,
@@ -48,7 +48,7 @@ CREATE TABLE Reasons(
 );
 
 CREATE TABLE Appointment(
-    id 		        INTEGER PRIMARY KEY NOT NULL,
+    id 		        INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     time		    TEXT NOT NULL,
     volunteerid     INTEGER NOT NULL,
     clientid        INTEGER NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE Food(
 );
 
 CREATE TABLE RequestForm(
-    id 		        INTEGER PRIMARY KEY NOT NULL,
+    id 		        INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     priority		INTEGER NOT NULL,
     volunteerid     INTEGER NOT NULL,
     clientid        INTEGER NOT NULL,
