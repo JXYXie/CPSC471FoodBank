@@ -41,7 +41,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       </h5>
   
       
-      <form>
+      <form action="/addreqform" method="post">
       
       <table width="100%" border="1"> 
         <tbody>
@@ -58,21 +58,21 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
           <tr> 
             <th width="50%" align="left"><label>Fresh Fruit (apples/oranges)<br></label></th>
             <th><input type="radio" name="freshfruit" checked> 0<br></th>
+            <th><input type="radio"  name="freshfruit"> 2<br></th>
             <th><input type="radio"  name="freshfruit"> 4<br></th>
             <th><input type="radio"  name="freshfruit"> 6<br></th>
-            <th><input type="radio"  name="freshfruit"> 12<br></th>
-            <th><input type="radio"  name="freshfruit"> 16<br></th>
-            <th><input type="radio"  name="freshfruit"> 18<br></th>
+            <th><input type="radio"  name="freshfruit"> 8<br></th>
+            <th><input type="radio"  name="freshfruit"> 10<br></th>
           </tr>
           
           <tr> 
             <th width="50%" align="left"><label>Carrots<br></label></th>
             <th><input type="radio" name="carrot" checked> 0<br></th>
-            <th><input type="radio"  name="carrot"> 3<br></th>
+            <th><input type="radio"  name="carrot"> 2<br></th>
+            <th><input type="radio"  name="carrot"> 4<br></th>
             <th><input type="radio"  name="carrot"> 6<br></th>
             <th><input type="radio"  name="carrot"> 8<br></th>
             <th><input type="radio"  name="carrot"> 10<br></th>
-            <th><input type="radio"  name="carrot"> 12<br></th>
           </tr>
           
           <tr> 
@@ -80,12 +80,12 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio" name="potato" checked> 0<br></th>
             <th><input type="radio"  name="potato"> 1<br></th>
             <th><input type="radio"  name="potato"> 2<br></th>
-            <th><input type="radio"  name="potato"> 2<br></th>
             <th><input type="radio"  name="potato"> 3<br></th>
             <th><input type="radio"  name="potato"> 4<br></th>
+            <th><input type="radio"  name="potato"> 5<br></th>
           </tr>
           
-          <tr> 
+          <!-- <tr> 
             <th width="50%" align="left"><label>Onion<br></label></th>
             <th><input type="radio" name="onion" checked> 0<br></th>
             <th><input type="radio"  name="onion"> 1<br></th>
@@ -93,8 +93,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio"  name="onion"> 2<br></th>
             <th><input type="radio"  name="onion"> 2<br></th>
             <th><input type="radio"  name="onion"> 3<br></th>
-          </tr>
-          
+          </tr> -->
           
           
           <tr> 
@@ -105,8 +104,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th width="50%" align="left"><label>Eggs (dozen)<br></label></th>
             <th><input type="radio" name="eggs" checked> 0<br></th>
             <th><input type="radio"  name="eggs"> 0.5<br></th>
-            <th><input type="radio"  name="eggs"> 0.5<br></th>
             <th><input type="radio"  name="eggs"> 1<br></th>
+            <th><input type="radio"  name="eggs"> 1.5<br></th>
             <th><input type="radio"  name="eggs"> 2<br></th>
             <th><input type="radio"  name="eggs"> 2.5<br></th>
           </tr>
@@ -115,13 +114,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th width="50%" align="left"><label>Butter<br></label></th>
             <th><input type="radio" name="butt" checked> 0<br></th>
             <th><input type="radio"  name="butt"> 1<br></th>
-            <th><input type="radio"  name="butt"> 1<br></th>
-            <th><input type="radio"  name="butt"> 1<br></th>
-            <th><input type="radio"  name="butt"> 1<br></th>
-            <th><input type="radio"  name="butt"> 1<br></th>
+            <th><input type="radio"  name="butt"> 2<br></th>
+            <th><input type="radio"  name="butt"> 3<br></th>
+            <th><input type="radio"  name="butt"> 4<br></th>
+            <th><input type="radio"  name="butt"> 5<br></th>
           </tr>
           
-          <tr> 
+          <!-- <tr> 
             <th width="50%" align="left"><label>Cheese Sticks<br></label></th>
             <th><input type="radio" name="cheese" checked> 0<br></th>
             <th><input type="radio"  name="cheese"> 4<br></th>
@@ -129,7 +128,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio"  name="cheese"> 4<br></th>
             <th><input type="radio"  name="cheese"> 8<br></th>
             <th><input type="radio"  name="cheese"> 8<br></th>
-          </tr>
+          </tr> -->
           
           
           
@@ -143,9 +142,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio" name="beef" checked> 0<br></th>
             <th><input type="radio"  name="beef"> 0.5<br></th>
             <th><input type="radio"  name="beef"> 1<br></th>
+            <th><input type="radio"  name="beef"> 1.5<br></th>
             <th><input type="radio"  name="beef"> 2<br></th>
-            <th><input type="radio"  name="beef"> 2<br></th>
-            <th><input type="radio"  name="beef"> 4<br></th>
+            <th><input type="radio"  name="beef"> 2.5<br></th>
           </tr>
           
           <tr> 
@@ -153,19 +152,19 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio" name="chicken" checked> 0<br></th>
             <th><input type="radio"  name="chicken"> 0.5<br></th>
             <th><input type="radio"  name="chicken"> 1<br></th>
-            <th><input type="radio"  name="chicken"> 1<br></th>
-            <th><input type="radio"  name="chicken"> 1<br></th>
-            <th><input type="radio"  name="chicken"> 1<br></th>
+            <th><input type="radio"  name="chicken"> 1.5<br></th>
+            <th><input type="radio"  name="chicken"> 2<br></th>
+            <th><input type="radio"  name="chicken"> 2.5<br></th>
           </tr>
           
           <tr> 
             <th width="50%" align="left"><label>Frozen Vegetables (corn/broccoli/peas/mixed)<br></label></th>
             <th><input type="radio" name="frovege" checked> 0<br></th>
-            <th><input type="radio"  name="frovege"> 2<br></th>
-            <th><input type="radio"  name="frovege"> 2<br></th>
+            <th><input type="radio"  name="frovege"> 1<br></th>
             <th><input type="radio"  name="frovege"> 2<br></th>
             <th><input type="radio"  name="frovege"> 3<br></th>
-            <th><input type="radio"  name="frovege"> 3<br></th>
+            <th><input type="radio"  name="frovege"> 4<br></th>
+            <th><input type="radio"  name="frovege"> 5<br></th>
           </tr>
           
           <tr> 
@@ -174,13 +173,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio"  name="bread"> 1<br></th>
             <th><input type="radio"  name="bread"> 2<br></th>
             <th><input type="radio"  name="bread"> 2<br></th>
-            <th><input type="radio"  name="bread"> 3<br></th>
-            <th><input type="radio"  name="bread"> 3<br></th>
+            <th><input type="radio"  name="bread"> 4<br></th>
+            <th><input type="radio"  name="bread"> 5<br></th>
           </tr>
           
           
           
-          <tr> 
+          <!-- <tr> 
             <th colspan="7"><label>Non - Dairy Beverages<br></label></th>        
           </tr>
           
@@ -202,9 +201,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio"  name="soy"> 2<br></th>
             <th><input type="radio"  name="soy"> 2<br></th>
             <th><input type="radio"  name="soy"> 3<br></th>
-          </tr>
-          
-          
+          </tr> -->
           
           
           <tr> 
@@ -216,9 +213,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio" name="vege" checked> 0<br></th>
             <th><input type="radio"  name="vege"> 1<br></th>
             <th><input type="radio"  name="vege"> 2<br></th>
+            <th><input type="radio"  name="vege"> 3<br></th>
             <th><input type="radio"  name="vege"> 4<br></th>
-            <th><input type="radio"  name="vege"> 6<br></th>
-            <th><input type="radio"  name="vege"> 8<br></th>
+            <th><input type="radio"  name="vege"> 5<br></th>
           </tr>
           
           <tr> 
@@ -226,12 +223,12 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio" name="fruit" checked> 0<br></th>
             <th><input type="radio"  name="fruit"> 1<br></th>
             <th><input type="radio"  name="fruit"> 2<br></th>
+            <th><input type="radio"  name="fruit"> 3<br></th>
             <th><input type="radio"  name="fruit"> 4<br></th>
-            <th><input type="radio"  name="fruit"> 6<br></th>
-            <th><input type="radio"  name="fruit"> 8<br></th>
+            <th><input type="radio"  name="fruit"> 5<br></th>
           </tr>
           
-          <tr> 
+          <!-- <tr> 
             <th width="50%" align="left"><label>Pasta Sauce/Tomato Sauce/Tomato Paste<br></label></th>
             <th><input type="radio" name="sauces" checked> 0<br></th>
             <th><input type="radio"  name="sauces"> 1<br></th>
@@ -239,9 +236,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio"  name="sauces"> 3<br></th>
             <th><input type="radio"  name="sauces"> 4<br></th>
             <th><input type="radio"  name="sauces"> 5<br></th>
-          </tr>
+          </tr> -->
           
-          <tr> 
+          <!-- <tr> 
             <th width="50%" align="left"><label>Canned Tomatoes<br></label></th>
             <th><input type="radio" name="ctomatoes" checked> 0<br></th>
             <th><input type="radio"  name="ctomatoes"> 1<br></th>
@@ -249,19 +246,19 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio"  name="ctomatoes"> 2<br></th>
             <th><input type="radio"  name="ctomatoes"> 3<br></th>
             <th><input type="radio"  name="ctomatoes"> 4<br></th>
-          </tr>
+          </tr> -->
           
           <tr> 
             <th width="50%" align="left"><label>Soup (tomato/mushroom/chicken/chunky/veg/other)<br></label></th>
             <th><input type="radio" name="soup" checked> 0<br></th>
+            <th><input type="radio"  name="soup"> 1<br></th>
+            <th><input type="radio"  name="soup"> 2<br></th>
+            <th><input type="radio"  name="soup"> 3<br></th>
             <th><input type="radio"  name="soup"> 4<br></th>
             <th><input type="radio"  name="soup"> 5<br></th>
-            <th><input type="radio"  name="soup"> 6<br></th>
-            <th><input type="radio"  name="soup"> 7<br></th>
-            <th><input type="radio"  name="soup"> 10<br></th>
           </tr>
           
-          <tr> 
+          <!-- <tr> 
             <th width="50%" align="left"><label>Baked Brown Beans (with/without pork)<br></label></th>
             <th><input type="radio" name="bbbeans" checked> 0<br></th>
             <th><input type="radio"  name="bbbeans"> 1<br></th>
@@ -269,22 +266,22 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio"  name="bbbeans"> 3<br></th>
             <th><input type="radio"  name="bbbeans"> 3<br></th>
             <th><input type="radio"  name="bbbeans"> 4<br></th>
-          </tr>
+          </tr> -->
           
-          <tr> 
+          <!-- <tr> 
             <th width="50%" align="left"><label>Canned Beans (chickpeas/kidney/mixed/other)<br></label></th>
             <th><input type="radio" name="cbeans" checked> 0<br></th>
             <th><input type="radio"  name="cbeans"> 1<br></th>
-            <th><input type="radio"  name="cbeans"> 1<br></th>
-            <th><input type="radio"  name="cbeans"> 2<br></th>
             <th><input type="radio"  name="cbeans"> 2<br></th>
             <th><input type="radio"  name="cbeans"> 3<br></th>
-          </tr>
+            <th><input type="radio"  name="cbeans"> 4<br></th>
+            <th><input type="radio"  name="cbeans"> 5<br></th>
+          </tr> -->
           
           <tr> 
             <th width="50%" align="left"><label>Canned Seafood (salmon/tuna/sardines/other)<br></label></th>
             <th><input type="radio" name="cseafood" checked> 0<br></th>
-            <th><input type="radio"  name="cseafood"> 2<br></th>
+            <th><input type="radio"  name="cseafood"> 1<br></th>
             <th><input type="radio"  name="cseafood"> 2<br></th>
             <th><input type="radio"  name="cseafood"> 3<br></th>
             <th><input type="radio"  name="cseafood"> 4<br></th>
@@ -301,7 +298,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio"  name="cmeat"> 4<br></th>
           </tr>
           
-          <tr> 
+          <!-- <tr> 
             <th width="50%" align="left"><label>Canned Meal (pasta/chili/other)<br></label></th>
             <th><input type="radio" name="cmeal" checked> 0<br></th>
             <th><input type="radio"  name="cmeal"> 1<br></th>
@@ -309,15 +306,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <th><input type="radio"  name="cmeal"> 2<br></th>
             <th><input type="radio"  name="cmeal"> 2<br></th>
             <th><input type="radio"  name="cmeal"> 3<br></th>
-          </tr>
-
-          
+          </tr> -->
           
         
         </tbody>
       </table>
 
-      
+      <h5 class="w3-padding-16">
+        Pick up date
+        </h5>
+        <input style="width: 100%; padding: 10px" type="text" placeholder="YYYY-MM-DD" name="pickupdate" required>
+
       <br><br>
       <button style="width: 100%; padding: 10px" type="submit">Submit</button>
       

@@ -13,11 +13,11 @@ def hello_world():
 
 @app.route('/admin')
 def admin():
-	global currentUser
-	if currentUser==3:
+	# global currentUser
+	# if currentUser==3:
 		return render_template('admin.html')
-	else:
-		return render_template('index.html')
+	# else:
+	# 	return render_template('index.html')
 
 #############garbage
 
@@ -26,13 +26,6 @@ def loginClient():
 	currentUser = 1
 	return render_template('index.html')
 	
-
-
-
-
-
-
-
 
 ####################
 
@@ -48,73 +41,29 @@ def signup():
 def reqform():
 	return render_template('reqform.html')
 
-@app.route('/addAdmin')
-def addAdmin():
-	return render_template('addAdmin.html')
+@app.route('/addreqform', methods=['POST'])
+def addreqform():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+	conn.commit()
+	conn.close()
+	return redirect('/')
 
-@app.route('/addAppointment')
-def addAppointment():
-	return render_template('addAppointment.html')
+@app.route('/addAppointmentData', methods=['POST'])
+def addAppointmentData():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+	conn.commit()
+	conn.close()
+	return redirect('/')
 
-@app.route('/addDonor')
-def addDonor():
-	return render_template('addDonor.html')
-
-@app.route('/addFunds')
-def addFunds():
-	return render_template('addFunds.html')
-
-@app.route('/addInventory')
-def addInventory():
-	return render_template('addInventory.html')
-
-@app.route('/addSupplier')
-def addSupplier():
-	return render_template('addSupplier.html')
-
-@app.route('/addVolunteer')
-def addVolunteer():
-	return render_template('addVolunteer.html')
-
-@app.route('/editAdmin')
-def editAdmin():
-	return render_template('editAdmin.html')
-
-@app.route('/editAppointment')
-def editAppointment():
-	return render_template('editAppointment.html')
-
-@app.route('/editClient')
-def editClient():
-	return render_template('editClient.html')
-
-@app.route('/editInventory')
-def editInventory():
-	return render_template('editInventory.html')
-
-@app.route('/editVolunteer')
-def editVolunteer():
-	return render_template('editVolunteer.html')
-
-@app.route('/viewAdmin')
-def viewAdmin():
-	return render_template('viewAdmin.html')
-
-@app.route('/viewAppointment')
-def viewAppointment():
-	return render_template('viewAppointment.html')
-
-@app.route('/viewClient')
-def viewClient():
-	return render_template('viewClient.html')
-
-@app.route('/viewInventory')
-def viewInventory():
-	return render_template('viewInventory.html')
-
-@app.route('/viewVolunteer')
-def viewVolunteer():
-	return render_template('viewVolunteer.html')
+@app.route('/addInventoryData', methods=['POST'])
+def addInventoryData():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+	conn.commit()
+	conn.close()
+	return redirect('/')
 
 
 @app.route('/register', methods=['POST'])
@@ -122,7 +71,6 @@ def addClientUser():
 	# open connection
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
-
 
 	c.execute(
 		"INSERT INTO Client (name,email,username,  password, income) VALUES ('{name}','{email}','{username}', '{password}', '{income}')".format(
@@ -152,19 +100,6 @@ def addClientUser():
 			clientid=key,
 			name=request.form['dname1'],
 			relationship=request.form['relation1']))
-
-
-# CREATE TABLE Client( 
-#     id              INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-#     name            TEXT,
-#     phonenumber		TEXT,
-#     email 		    TEXT NOT NULL,
-#     username  	    TEXT NOT NULL UNIQUE,
-#     password		TEXT NOT NULL,
-#     income 		    INTEGER
-# );
-
-
 	
 	conn.commit()
 	conn.close()
@@ -178,18 +113,6 @@ def addAdminUser():
 
 	# TODO: get the data from form
 	# username = request.form['username']
-
-
-
-# 	CREATE TABLE Admin(
-#     id				INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-#     name            TEXT,
-#     phonenumber		TEXT,
-#     email 		    TEXT NOT NULL,
-#     username  	    TEXT NOT NULL UNIQUE,
-#     password		TEXT NOT NULL
-# );
-
 
 	# TODO: put datat in
 	c.execute(
@@ -235,3 +158,73 @@ def addVolunteerUser():
 	conn.commit()
 	conn.close()
 	return redirect('/admin')
+
+@app.route('/addAdmin')
+def addAdmin():
+	return render_template('addAdmin.html')
+
+@app.route('/addAppointment')
+def addAppointment():
+	return render_template('addAppointment.html')
+
+@app.route('/addDonor')
+def addDonor():
+	return render_template('addDonor.html')
+
+@app.route('/addFunds')
+def addFunds():
+	return render_template('addFunds.html')
+
+@app.route('/addInventory')
+def addInventory():
+	return render_template('addInventory.html')
+
+@app.route('/addSupplier')
+def addSupplier():
+	return render_template('addSupplier.html')
+
+@app.route('/addVolunteer')
+def addVolunteer():
+	return render_template('addVolunteer.html')
+
+@app.route('/viewAdmin')
+def viewAdmin():
+	return render_template('viewAdmin.html')
+
+@app.route('/viewAppointment')
+def viewAppointment():
+	return render_template('viewAppointment.html')
+
+@app.route('/viewClient')
+def viewClient():
+	return render_template('viewClient.html')
+
+@app.route('/viewInventory')
+def viewInventory():
+	return render_template('viewInventory.html')
+
+@app.route('/viewVolunteer')
+def viewVolunteer():
+	return render_template('viewVolunteer.html')
+
+@app.route('/editAdmin')
+def editAdmin():
+	return render_template('editAdmin.html')
+
+@app.route('/editAppointment')
+def editAppointment():
+	return render_template('editAppointment.html')
+
+@app.route('/editClient')
+def editClient():
+	return render_template('editClient.html')
+
+@app.route('/editInventory')
+def editInventory():
+	return render_template('editInventory.html')
+
+@app.route('/editVolunteer')
+def editVolunteer():
+	return render_template('editVolunteer.html')
+
+
