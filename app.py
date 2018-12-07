@@ -242,24 +242,52 @@ def viewInventory():
 
 	return render_template('viewInventory.html', data=results)
 
-@app.route('/editAdmin')
-def editAdmin():
+@app.route('/deleteAdmin')
+def deleteAdmin():
+	return render_template('deleteAdmin.html')
+
+@app.route('/deleteVolunteer')
+def deleteVolunteer():
+	return render_template('deleteVolunteer.html')
+
+@app.route('/deleteClient')
+def deleteClient():
+	return render_template('deleteClient.html')
+
+@app.route('/deleteOrder')
+def deleteOrder():
+	return render_template('deleteOrder.html')
+
+@app.route('/deleteAppointment')
+def deleteAppointment():
+	return render_template('deleteAppointment.html')
+
+@app.route('/deleteInventory')
+def deleteInventory():
+	return render_template('deleteInventory.html')
+
+@app.route('/deleteAdminUser')
+def deleteAdminUser():
 	return render_template('editAdmin.html')
 
-@app.route('/editAppointment')
-def editAppointment():
-	return render_template('editAppointment.html')
+# @app.route('/editAdmin')
+# def editAdmin():
+# 	return render_template('editAdmin.html')
 
-@app.route('/editClient')
-def editClient():
-	return render_template('editClient.html')
+# @app.route('/editAppointment')
+# def editAppointment():
+# 	return render_template('editAppointment.html')
 
-@app.route('/editInventory')
-def editInventory():
-	return render_template('editInventory.html')
+# @app.route('/editClient')
+# def editClient():
+# 	return render_template('editClient.html')
 
-@app.route('/editVolunteer')
-def editVolunteer():
-	return render_template('editVolunteer.html')
+# @app.route('/editInventory')
+# def editInventory():
+# 	return render_template('editInventory.html')
+
+# @app.route('/editVolunteer')
+# def editVolunteer():
+# 	return render_template('editVolunteer.html')
 
 
