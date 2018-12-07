@@ -13,12 +13,11 @@ CREATE TABLE Admin(
 CREATE TABLE Volunteer(
     id              INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     name            TEXT,
+    phonenumber		TEXT,
     email 		    TEXT NOT NULL,
     username  	    TEXT NOT NULL UNIQUE,
     password		TEXT NOT NULL,
-    availability    TEXT,
-    managerid       INTEGER,
-    FOREIGN KEY(managerid) REFERENCES Admin(id) ON UPDATE CASCADE
+    availability    TEXT
 );
 
 CREATE TABLE Client(

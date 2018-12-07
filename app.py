@@ -68,7 +68,6 @@ def addInventoryData():
 
 @app.route('/register', methods=['POST'])
 def addClientUser():
-	# open connection
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 
@@ -83,14 +82,6 @@ def addClientUser():
 	temp = (t,)
 	c.execute('SELECT * FROM Client WHERE name=?', temp)
 	key = c.fetchone()[0]
-
-# CREATE TABLE Dependant(  
-#     clientid        INTEGER NOT NULL,
-#     name            TEXT NOT NULL,
-#     relationship    TEXT NOT NULL,
-#     FOREIGN KEY(clientid) REFERENCES Client(id) ON UPDATE CASCADE
-# );
-
 
 	#need to do this for all dependents?  how to for loop lmao
 	c.execute(
@@ -114,7 +105,7 @@ def addAdminUser():
 
 	# TODO: put datat in
 	c.execute(
-		"INSERT INTO Admin (name, phonenumber,email,username,  password) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}')".format(
+		"INSERT INTO Admin (name, phonenumber, email, username, password) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}')".format(
 			name=request.form['name'],
 			phonenumber=request.form['phone'],
 			email=request.form['email'],
@@ -125,18 +116,6 @@ def addAdminUser():
 	conn.close()
 	return redirect('/admin')
 
-
-# 	CREATE TABLE Volunteer(
-#     id              INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-#     name            TEXT,
-#     phonenumber		TEXT,
-#     email 		    TEXT NOT NULL,
-#     username  	    TEXT NOT NULL UNIQUE,
-#     password		TEXT NOT NULL,
-#     availability    TEXT,
-#     managerid       INTEGER,
-#     FOREIGN KEY(managerid) REFERENCES Admin(id) ON UPDATE CASCADE
-# );
 @app.route('/addVolunteerUser', methods=['POST'])
 def addVolunteerUser():
 	# open connection
@@ -144,7 +123,7 @@ def addVolunteerUser():
 	c = conn.cursor()
 
 	c.execute(
-		"INSERT INTO Volunteer (name, phonenumber,email,username,  password,availability) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}','{availability}',)".format(
+		"INSERT INTO Volunteer (name, phonenumber, email,  username, password, availability) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}','{availability}')".format(
 			name=request.form['name'],
 			phonenumber=request.form['phone'],
 			email=request.form['email'],
