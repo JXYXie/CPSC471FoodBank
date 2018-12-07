@@ -113,3 +113,31 @@ def addClientUser():
 	conn.commit()
 	conn.close()
 	return redirect('/')
+
+@app.route('/addNewAdmin', methods=['POST'])
+def addAdminUser():
+	# open connection
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	# TODO: get the data from form
+	# username = request.form['username']
+
+	# TODO: put datat in
+	c.execute(
+		"INSERT INTO Admin (id, name, phonenumber) VALUES ({id}, '{name}', '{phonenumber}')".format(
+                        id=1,
+			name=request.form['name'],
+			phonenumber=request.form['phone']))
+
+	c.execute(
+		"INSERT INTO Account (username, email, accesslevel, password, userid) VALUES ('{username}', '{email}', {accesslevel}, '{password}', {userid})".format(
+                        username=request.form['username'],
+			email=request.form['email'],
+			accesslevel=2,
+                        password=request.form['password'],
+                        userid=1))
+	
+	conn.commit()
+	conn.close()
+	return redirect('/admin')
