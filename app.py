@@ -50,48 +50,48 @@ def loginAccount():
 
 
 	if request.form['user'] == 'client':
-                c.execute("SELECT * FROM Client")
-                results = c.fetchall()
+				c.execute("SELECT * FROM Client")
+				results = c.fetchall()
 
-                for x in results:
-                        if x[3] == request.form['username']:
-                                if x[4] == request.form['password']:
-                                        currentUser = 1
-                                        conn.commit()
-                                        conn.close()
-                                        return redirect('/')
+				for x in results:
+						if x[3] == request.form['username']:
+								if x[4] == request.form['password']:
+										currentUser = 1
+										conn.commit()
+										conn.close()
+										return redirect('/')
 
 
-        elif request.form['user'] == 'volunteer':
-                c.execute("SELECT * FROM Volunteer WHERE username=?")
-                results = c.fetchone()[0]
+	elif request.form['user'] == 'volunteer':
+				c.execute("SELECT * FROM Volunteer WHERE username=?")
+				results = c.fetchone()[0]
 
-                for x in results:
-                        if x[4] == request.form['username']:
-                                if x[5] == request.form['password']:
-                                        currentUser = 2
-                                        conn.commit()
-                                        conn.close()
-                                        return redirect('/')
+				for x in results:
+						if x[4] == request.form['username']:
+								if x[5] == request.form['password']:
+										currentUser = 2
+										conn.commit()
+										conn.close()
+										return redirect('/')
 
 
 	elif request.form['user'] == 'admin':
-                c.execute("SELECT * FROM Admin WHERE username=?")
-                results = c.fetchone()[0]
+				c.execute("SELECT * FROM Admin WHERE username=?")
+				results = c.fetchone()[0]
 
-                for x in results:
-                        if x[4] == request.form['username']:
-                                if x[5] == request.form['password']:
-                                        currentUser = 3
-                                        conn.commit()
-                                        conn.close()
-                                        return redirect('/admin')
+				for x in results:
+						if x[4] == request.form['username']:
+								if x[5] == request.form['password']:
+										currentUser = 3
+										conn.commit()
+										conn.close()
+										return redirect('/admin')
 
-                
+				
 
-        conn.commit()
-        conn.close()
-        return redirect('/login')
+	conn.commit()
+	conn.close()
+	return redirect('/login')
 
 
 
