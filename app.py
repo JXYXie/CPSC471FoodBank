@@ -258,6 +258,46 @@ def addSupplier():
 def addVolunteer():
 	return render_template('addVolunteer.html')
 
+
+@app.route('/editAdminUser', methods=['POST'])
+def editAdminUser():
+	# open connection
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	newName = ""
+	newPhone = ""
+
+	c.execute("SELECT * FROM Admin WHERE id=?", (request.form['id']))
+	results = c.fetchone()
+	if results is not None:
+                if request.form['name'] != "":
+                        newName = request.form['name']
+                else:
+                        c.execute("SELECT name FROM Admin WHERE id=?", (request.form['id']))
+                        newName = c.fetchone()[0]
+                        
+                if request.form['phone'] != "":
+                        newPhone = request.form['phone']
+                else:
+                        c.execute("SELECT phonenumber FROM Admin WHERE id=?", (request.form['id']))
+                        newPhone = c.fetchone()[0]
+
+        
+
+
+	c.execute(
+		"INSERT INTO Admin (name, phonenumber, email, username, password) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}')".format(
+			name=request.form['name'],
+			phonenumber=request.form['phone'],
+			email=request.form['email'],
+			username=request.form['username'],
+			password=request.form['password']))
+	
+	conn.commit()
+	conn.close()
+	return redirect('/admin')
+
 @app.route('/viewAdmin')
 def viewAdmin():
 	results = []
