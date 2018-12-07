@@ -187,6 +187,26 @@ def addSupplier():
 def addVolunteer():
 	return render_template('addVolunteer.html')
 
+@app.route('/deleteAdmin')
+def addDonor():
+	return render_template('deleteAdmin.html')
+
+@app.route('/deleteVolunteer')
+def addFunds():
+	return render_template('deleteVolunteer.html')
+
+@app.route('/deleteClient')
+def addInventory():
+	return render_template('deleteClient.html')
+
+@app.route('/deleteAppointment')
+def addSupplier():
+	return render_template('deleteAppointment.html')
+
+@app.route('/deleteInventory')
+def addVolunteer():
+	return render_template('deleteInventory.html')
+
 @app.route('/viewAdmin')
 def viewAdmin():
 	return render_template('viewAdmin.html')
