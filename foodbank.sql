@@ -154,7 +154,7 @@ CREATE TABLE Foodstore(
     groundBeef      INTEGER NOT NULL,
     wholeChicken    INTEGER NOT NULL,
     veggieFrozen    INTEGER NOT NULL,
-    frozenBread     INTEGER NOT NULL,
+    bread           INTEGER NOT NULL,
     cannedVeggie    INTEGER NOT NULL,
     cannedFruit     INTEGER NOT NULL,
     cannedSoup      INTEGER NOT NULL,

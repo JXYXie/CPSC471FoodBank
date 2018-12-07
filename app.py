@@ -141,6 +141,23 @@ def addAppointmentData():
 def addInventoryData():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
+	c.execute(
+		"INSERT INTO Foodstore (fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}' )".format(
+			fruits=request.form['freshfruit'],
+			vegetables=request.form['carrot'],
+			potatoBags=request.form['potato'],
+			eggs=request.form['eggs'],
+			butter=request.form['butt'],
+			groundBeef=request.form['beef'],
+			wholeChicken=request.form['chicken'],
+			veggieFrozen=request.form['frovege'],
+			bread=request.form['bread'],
+			cannedVeggie=request.form['vege'],
+			cannedFruit=request.form['fruit'],
+			cannedSoup=request.form['soup'],
+			cannedSeafood=request.form['cseafood'],
+			cannedMeat=request.form['cmeat']))
+
 	conn.commit()
 	conn.close()
 	return redirect('/')
@@ -295,7 +312,7 @@ def viewInventory():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 
-	c.execute("SELECT * FROM Food")
+	c.execute("SELECT * FROM Foodstore")
 	results = c.fetchall()
 	print(results)
 

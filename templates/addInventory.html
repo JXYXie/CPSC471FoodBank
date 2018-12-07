@@ -39,23 +39,49 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       
       <form action="/addInventoryData" method="post">
       
-      <label>Barcode<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Barcode" name="barcode" required>
-      
-      <label>Name<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Name" name="name" required>
-      
-      <label>Quantity<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Quantity" name="quantity" required>
-      
-      <label>Expiry Date<br></label>
-      <input style="width: 100%; padding: 10px" type="date" name="expDate" required>
+        <label>Fruits<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="freshfruit" min="0" required>
+        
+        <label><br>Vegetables<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="carrot" min="0" required>
+        
+        <label><br>Potatoes<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="potato" min="0" required>
+        
+        <label><br>Eggs (Dozen)<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="eggs" min="0" required>
+        
+        <label><br>Butter<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="butt" min="0" required>
+        
+        <label><br>Groud Beef<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="beef" min="0" required>
+        
+        <label><br>Chicken<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="chicken" min="0" required>
+        
+        <label><br>Frozen Veggies<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="frovege" min="0" required>
+        
+        <label><br>Bread<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="bread" min="0" required>
 
-      
-      <label>Foodbank Address<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Address" name="address" required>
-      
-      <br><br>
+        <label><br>Canned Veggies<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="vege" min="0" required>
+
+        <label><br>Canned Fruits<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="fruit" min="0" required>
+        
+        <label><br>Canned Soup<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="soup" min="0" required>
+        
+        <label><br>Canned Seafoods<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="cseafood" min="0" required>
+        
+        <label><br>Canned Meats<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="cmeat" min="0" required>
+        
+        <br><br>
       <button style="width: 100%; padding: 10px" type="submit">Submit</button>
       
       </form>
