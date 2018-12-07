@@ -2,37 +2,34 @@
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE Admin(
-    id				INTEGER PRIMARY KEY AUTOINCREMENT,
+    id				INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     name            TEXT,
-    phonenumber		TEXT
+    phonenumber		TEXT,
+    email 		    TEXT NOT NULL,
+    username  	    TEXT NOT NULL UNIQUE,
+    password		TEXT NOT NULL
 );
 
 CREATE TABLE Volunteer(
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    id              INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     name            TEXT,
     phonenumber		TEXT,
+    email 		    TEXT NOT NULL,
+    username  	    TEXT NOT NULL UNIQUE,
+    password		TEXT NOT NULL,
     availability    TEXT,
     managerid       INTEGER,
     FOREIGN KEY(managerid) REFERENCES Admin(id) ON UPDATE CASCADE
 );
 
 CREATE TABLE Client( 
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    id              INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     name            TEXT,
-    income 		    INTEGER,
-    accountid 	    INTEGER,
-    FOREIGN KEY(accountid) REFERENCES Client(id) ON UPDATE CASCADE
-);
-
-CREATE TABLE Account(
-    username  	    TEXT PRIMARY KEY NOT NULL,
+    phonenumber		TEXT,
     email 		    TEXT NOT NULL,
-    accesslevel	    INTEGER,
+    username  	    TEXT NOT NULL UNIQUE,
     password		TEXT NOT NULL,
-    userid          INTEGER NOT NULL,
-    FOREIGN KEY(userid) REFERENCES Client(id) ON UPDATE CASCADE,
-    FOREIGN KEY(userid) REFERENCES Volunteer(id) ON UPDATE CASCADE,
-    FOREIGN KEY(userid) REFERENCES Admin(id) ON UPDATE CASCADE
+    income 		    INTEGER
 );
 
 CREATE TABLE DietaryRestrictions(
@@ -48,7 +45,7 @@ CREATE TABLE Reasons(
 );
 
 CREATE TABLE Appointment(
-    id 		        INTEGER PRIMARY KEY AUTOINCREMENT,
+    id 		        INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     time		    TEXT NOT NULL,
     volunteerid     INTEGER NOT NULL,
     clientid        INTEGER NOT NULL,
@@ -81,7 +78,7 @@ CREATE TABLE Food(
 );
 
 CREATE TABLE RequestForm(
-    id 		        INTEGER PRIMARY KEY AUTOINCREMENT,
+    id 		        INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     priority		INTEGER NOT NULL,
     volunteerid     INTEGER NOT NULL,
     clientid        INTEGER NOT NULL,
