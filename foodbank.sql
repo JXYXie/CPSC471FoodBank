@@ -76,9 +76,23 @@ CREATE TABLE Food(
 
 CREATE TABLE RequestForm(
     id 		        INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-    priority		INTEGER NOT NULL,
-    volunteerid     INTEGER NOT NULL,
+    fruits          INTEGER NOT NULL,
+    vegetables      INTEGER NOT NULL,
+    potatoBags      INTEGER NOT NULL,
+    eggs            INTEGER NOT NULL,
+    butter          INTEGER NOT NULL,
+    groundBeef      INTEGER NOT NULL,
+    wholeChicken    INTEGER NOT NULL,
+    veggieFrozen    INTEGER NOT NULL,
+    bread           INTEGER NOT NULL,
+    cannedVeggie    INTEGER NOT NULL,
+    cannedFruit     INTEGER NOT NULL,
+    cannedSoup      INTEGER NOT NULL,
+    cannedSeafood   INTEGER NOT NULL,
+    cannedMeat      INTEGER NOT NULL,
+    volunteerid     INTEGER,
     clientid        INTEGER NOT NULL,
+    date            TEXT,
     FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE,
     FOREIGN KEY(clientid) REFERENCES Client(id) ON UPDATE CASCADE
 );
@@ -131,8 +145,19 @@ CREATE TABLE Takes(
     FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE
 );
 
-CREATE TABLE FoodStore(
-    numApples       INTEGER NOT NULL
-
-
+CREATE TABLE Foodstore(
+    fruits          INTEGER NOT NULL,
+    vegetables      INTEGER NOT NULL,
+    potatoBags      INTEGER NOT NULL,
+    eggs            INTEGER NOT NULL,
+    butter          INTEGER NOT NULL,
+    groundBeef      INTEGER NOT NULL,
+    wholeChicken    INTEGER NOT NULL,
+    veggieFrozen    INTEGER NOT NULL,
+    frozenBread     INTEGER NOT NULL,
+    cannedVeggie    INTEGER NOT NULL,
+    cannedFruit     INTEGER NOT NULL,
+    cannedSoup      INTEGER NOT NULL,
+    cannedSeafood   INTEGER NOT NULL,
+    cannedMeat      INTEGER NOT NULL
 );

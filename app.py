@@ -1,6 +1,7 @@
 
 from flask import Flask, render_template, request, redirect
 import sqlite3
+import random as rnd
 
 app = Flask(__name__)
 
@@ -45,6 +46,25 @@ def reqform():
 def addreqform():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
+	c.execute(
+		"INSERT INTO RequestForm (fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid, date) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}', '{date}' )".format(
+			fruits=request.form['freshfruit'],
+			vegetables=request.form['carrot'],
+			potatoBags=request.form['potato'],
+			eggs=request.form['eggs'],
+			butter=request.form['butt'],
+			groundBeef=request.form['beef'],
+			wholeChicken=request.form['chicken'],
+			veggieFrozen=request.form['frovege'],
+			bread=request.form['bread'],
+			cannedVeggie=request.form['vege'],
+			cannedFruit=request.form['fruit'],
+			cannedSoup=request.form['soup'],
+			cannedSeafood=request.form['cseafood'],
+			cannedMeat=request.form['cmeat'],
+			clientid=request.form['id'],
+			date=request.form['pickupdate']))
+
 	conn.commit()
 	conn.close()
 	return redirect('/')
@@ -53,6 +73,13 @@ def addreqform():
 def addAppointmentData():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
+	c.execute(
+		"INSERT INTO Admin (name, phonenumber, email, username, password) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}')".format(
+			name=request.form['name'],
+			phonenumber=request.form['phone'],
+			email=request.form['email'],
+			username=request.form['username'],
+			password=request.form['password']))
 	conn.commit()
 	conn.close()
 	return redirect('/')
