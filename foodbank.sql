@@ -13,7 +13,6 @@ CREATE TABLE Admin(
 CREATE TABLE Volunteer(
     id              INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     name            TEXT,
-    phonenumber		TEXT,
     email 		    TEXT NOT NULL,
     username  	    TEXT NOT NULL UNIQUE,
     password		TEXT NOT NULL,
@@ -22,10 +21,9 @@ CREATE TABLE Volunteer(
     FOREIGN KEY(managerid) REFERENCES Admin(id) ON UPDATE CASCADE
 );
 
-CREATE TABLE Client( 
+CREATE TABLE Client(
     id              INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     name            TEXT,
-    phonenumber		TEXT,
     email 		    TEXT NOT NULL,
     username  	    TEXT NOT NULL UNIQUE,
     password		TEXT NOT NULL,
@@ -134,4 +132,8 @@ CREATE TABLE Takes(
     FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE
 );
 
+CREATE TABLE FoodStore(
+    numApples       INTEGER NOT NULL
 
+
+);
