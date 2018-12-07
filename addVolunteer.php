@@ -1,3 +1,6 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <title>SU Food Bank</title>
@@ -29,7 +32,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">Add Admin</h1>
+  <h1 class="w3-margin w3-jumbo">Add Volunteer</h1>
 </header>
 
 <!-- First Grid -->
@@ -53,6 +56,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       
       <label><br>Name<br></label>
       <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Name" name="name" required>
+      
+      <label><br>Availability<br></label>
+      <input type="radio"  name="avai" checked> Monday &#160; &#160;
+      <input type="radio"  name="avai"> Tuesday &#160; &#160;
+      <input type="radio"  name="avai"> Wednesday &#160; &#160;
+      <input type="radio"  name="avai"> Thursday &#160; &#160;
+      <input type="radio"  name="avai"> Friday &#160; &#160;
+
+      
+      <label><br><br>Manager ID<br></label>
+      <input style="width: 100%; padding: 10px" type="text" placeholder="30044533" name="manager" pattern="[0-9]{8}"required>
       
       <br><br>
       <button style="width: 100%; padding: 10px" type="submit">Submit</button>

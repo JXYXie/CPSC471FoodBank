@@ -1,3 +1,6 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <title>SU Food Bank</title>
@@ -19,17 +22,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   <div class="w3-bar w3-red w3-card w3-left-align w3-large">
     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
     <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Home</a>
-    <a href="login.html" class="w3-bar-item w3-button w3-padding-large w3-white">Log In</a>
+    <a href="login.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Log In</a>
     <a href="signup.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Sign Up</a>
     <a href="reqform.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Request Form</a>
-    <a href="admin.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Admin</a>
+    <a href="admin.html" class="w3-bar-item w3-button w3-padding-large w3-white">Admin</a>
   </div>
 
 </div>
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">Log In </h1>
+  <h1 class="w3-margin w3-jumbo">Add Admin</h1>
 </header>
 
 <!-- First Grid -->
@@ -44,8 +47,18 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       
       <label><br>Password<br></label>
       <input style="width: 100%; padding: 10px" type="password" placeholder="Enter Password" name="password" required>
+      
+      <label><br>E-mail<br></label>
+      <input style="width: 100%; padding: 10px" type="email" placeholder="example@ucalgary.ca" name="email" required>
+      
+      <label><br>Phone Number<br></label>
+      <input style="width: 100%; padding: 10px" type="text" placeholder="5879660788" name="phone" pattern="[0-9]{10}" required>
+      
+      <label><br>Name<br></label>
+      <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Name" name="name" required>
+      
       <br><br>
-      <button style="width: 100%; padding: 10px" type="submit">Log In</button>
+      <button style="width: 100%; padding: 10px" type="submit">Submit</button>
       
       </form>
 

@@ -1,3 +1,6 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <title>SU Food Bank</title>
@@ -29,7 +32,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">Add Donor</h1>
+  <h1 class="w3-margin w3-jumbo">Add Order</h1>
 </header>
 
 <!-- First Grid -->
@@ -39,16 +42,20 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       
       <form>
       
-  
-      <label><br>Name<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Name" name="name" required>
+      <label>Username<br></label>
+      <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Username" name="username" required>
       
-
-      <label><br>Phone Number<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="5879660788" name="phone" pattern="[0-9]{10}" required>
- 
+      <label><br>Password<br></label>
+      <input style="width: 100%; padding: 10px" type="password" placeholder="Enter Password" name="password" required>
+      
       <label><br>E-mail<br></label>
       <input style="width: 100%; padding: 10px" type="email" placeholder="example@ucalgary.ca" name="email" required>
+      
+      <label><br>Phone Number<br></label>
+      <input style="width: 100%; padding: 10px" type="text" placeholder="5879660788" name="phone" pattern="[0-9]{10}" required>
+      
+      <label><br>Name<br></label>
+      <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Name" name="name" required>
       
       <br><br>
       <button style="width: 100%; padding: 10px" type="submit">Submit</button>
