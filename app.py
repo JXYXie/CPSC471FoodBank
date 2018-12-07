@@ -24,6 +24,55 @@ def signup():
 def reqform():
 	return render_template('reqform.html')
 
+@app.route('/addAdmin')
+def addAdmin():
+	return render_template('addAdmin.html')
+
+@app.route('/addAppointment')
+def addAppointment():
+	return render_template('addAppointment.html')
+
+@app.route('/addDonor')
+def addDonor():
+	return render_template('addDonor.html')
+
+@app.route('/addFunds')
+def addFunds():
+	return render_template('addFunds.html')
+
+@app.route('/addInventory')
+def addInventory():
+	return render_template('addInventory.html')
+
+@app.route('/addSupplier')
+def addSupplier():
+	return render_template('addSupplier.html')
+
+@app.route('/addVolunteer')
+def addVolunteer():
+	return render_template('addVolunteer.html')
+
+@app.route('/editAdmin')
+def editAdmin():
+	return render_template('editAdmin.html')
+
+@app.route('/editAppointment')
+def editAppointment():
+	return render_template('editAppointment.html')
+
+@app.route('/editClient')
+def editClient():
+	return render_template('editClient.html')
+
+@app.route('/editInventory')
+def editInventory():
+	return render_template('editInventory.html')
+
+@app.route('/editVolunteer')
+def editVolunteer():
+	return render_template('editVolunteer.html')
+
+
 @app.route('/register', methods=['POST'])
 def addUser():
 	# open connection
