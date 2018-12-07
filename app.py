@@ -104,11 +104,17 @@ def addClientUser():
 
 	# TODO: put datat in
 	c.execute(
-		"INSERT INTO Account (username, email, accesslevel, password, userid) VALUES ('{name}', '{email}', {accesslevel}, '{password}', {userid})".format(
-			name=request.form['username'],
-			email=request.form['email'], accesslevel=1,
-			password=request.form['password'],
-			userid=request.form['userid']))
+		"INSERT INTO Client (id, name, phonenumber) VALUES ('{name}', '{phonenumber}')".format(
+			name=request.form['name'],
+			phonenumber=request.form['phone']))
+
+	c.execute(
+		"INSERT INTO Account (username, email, accesslevel, password, userid) VALUES ('{username}', '{email}', {accesslevel}, '{password}', {userid})".format(
+                        username=request.form['username'],
+			email=request.form['email'],
+			accesslevel=1,
+                        password=request.form['password'],
+                        userid=1))
 	
 	conn.commit()
 	conn.close()
@@ -125,8 +131,7 @@ def addAdminUser():
 
 	# TODO: put datat in
 	c.execute(
-		"INSERT INTO Admin (id, name, phonenumber) VALUES ({id}, '{name}', '{phonenumber}')".format(
-                        id=1,
+		"INSERT INTO Admin (name, phonenumber) VALUES ('{name}', '{phonenumber}')".format(
 			name=request.form['name'],
 			phonenumber=request.form['phone']))
 
