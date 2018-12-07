@@ -127,12 +127,10 @@ def addAppointmentData():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 	c.execute(
-		"INSERT INTO Admin (name, phonenumber, email, username, password) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}')".format(
-			name=request.form['name'],
-			phonenumber=request.form['phone'],
-			email=request.form['email'],
-			username=request.form['username'],
-			password=request.form['password']))
+		"INSERT INTO Appointment (time, clientid, volunteerid ) VALUES ('{time}', '{clientid}','{volunteerid}')".format(
+			time=request.form['date'],
+			clientid=request.form['cID'],
+			volunteerid=request.form['vID']))
 	conn.commit()
 	conn.close()
 	return redirect('/')
@@ -318,6 +316,79 @@ def viewInventory():
 
 	return render_template('viewInventory.html', data=results)
 
+@app.route('/viewOrder')
+def viewOrder():
+	results = []
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	c.execute("SELECT * FROM RequestForm")
+	results = c.fetchall()
+	print(results)
+
+	return render_template('viewOrder.html', data=results)
+
+@app.route('/deleteAdminUser',methods=['POST'])
+def deleteAdminUser():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+	t = (request.form['id'])
+	temp = (t,)
+	c.execute("DELETE FROM Admin WHERE id=?", temp)
+	
+	conn.commit()
+	conn.close()
+	return redirect('/viewAdmin')
+
+
+@app.route('/deleteVolunteerUser',methods=['POST'])
+def deleteVolunteerUser():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+	t = (request.form['id'])
+	temp = (t,)
+	c.execute("DELETE FROM Volunteer WHERE id=?", temp)
+	
+	conn.commit()
+	conn.close()
+	return redirect('/viewVolunteer')
+
+@app.route('/deleteClientUser',methods=['POST'])
+def deleteClientUser():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+	t = (request.form['id'])
+	temp = (t,)
+	c.execute("DELETE FROM Client WHERE id=?", temp)
+	
+	conn.commit()
+	conn.close()
+	return redirect('/viewClient')
+
+@app.route('/deleteOrderData',methods=['POST'])
+def deleteOrderData():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+	t = (request.form['id'])
+	temp = (t,)
+	c.execute("DELETE FROM RequestForm WHERE id=?", temp)
+	
+	conn.commit()
+	conn.close()
+	return redirect('/viewOrder')
+
+@app.route('/deleteAppointmentData',methods=['POST'])
+def deleteAppointmentData():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+	t = (request.form['id'])
+	temp = (t,)
+	c.execute("DELETE FROM Appointment WHERE id=?", temp)
+	
+	conn.commit()
+	conn.close()
+	return redirect('/viewAppointment')
+
 @app.route('/deleteAdmin')
 def deleteAdmin():
 	return render_template('deleteAdmin.html')
@@ -341,10 +412,6 @@ def deleteAppointment():
 @app.route('/deleteInventory')
 def deleteInventory():
 	return render_template('deleteInventory.html')
-
-@app.route('/deleteAdminUser')
-def deleteAdminUser():
-	return render_template('editAdmin.html')
 
 # @app.route('/editAdmin')
 # def editAdmin():
