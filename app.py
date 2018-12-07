@@ -72,9 +72,29 @@ def editInventory():
 def editVolunteer():
 	return render_template('editVolunteer.html')
 
+@app.route('/viewAdmin')
+def viewAdmin():
+	return render_template('viewAdmin.html')
+
+@app.route('/viewAppointment')
+def viewAppointment():
+	return render_template('viewAppointment.html')
+
+@app.route('/viewClient')
+def viewClient():
+	return render_template('viewClient.html')
+
+@app.route('/viewInventory')
+def viewInventory():
+	return render_template('viewInventory.html')
+
+@app.route('/viewVolunteer')
+def viewVolunteer():
+	return render_template('viewVolunteer.html')
+
 
 @app.route('/register', methods=['POST'])
-def addUser():
+def addClientUser():
 	# open connection
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
