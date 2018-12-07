@@ -73,10 +73,8 @@ def addClientUser():
 	c = conn.cursor()
 
 	c.execute(
-		"INSERT INTO Client (name,email,username,  password, income) VALUES ('{name}','{email}','{username}', '{password}', '{income}')".format(
+		"INSERT INTO Client (name, email, username, password, income) VALUES ('{name}','{email}','{username}', '{password}', '{income}')".format(
 			name=request.form['name'],
-			#phonenumber=request.form['phone'],
-			#removed phone number not in site form removed from sql as well
 			email=request.form['email'],
 			username=request.form['username'],
 			password=request.form['password'],
@@ -146,14 +144,13 @@ def addVolunteerUser():
 	c = conn.cursor()
 
 	c.execute(
-		"INSERT INTO Volunteer (name, phonenumber,email,username,  password,availability,managerid) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}','{availability}','{managerid}')".format(
+		"INSERT INTO Volunteer (name, phonenumber,email,username,  password,availability) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}','{availability}',)".format(
 			name=request.form['name'],
 			phonenumber=request.form['phone'],
 			email=request.form['email'],
 			username=request.form['username'],
 			password=request.form['password'],
-			availability=request.form['availability'],
-			managerid=request.form['managerid']))
+			availability=request.form['availability']))
 	
 	conn.commit()
 	conn.close()
@@ -187,45 +184,63 @@ def addSupplier():
 def addVolunteer():
 	return render_template('addVolunteer.html')
 
-@app.route('/deleteAdmin')
-def addDonor():
-	return render_template('deleteAdmin.html')
-
-@app.route('/deleteVolunteer')
-def addFunds():
-	return render_template('deleteVolunteer.html')
-
-@app.route('/deleteClient')
-def addInventory():
-	return render_template('deleteClient.html')
-
-@app.route('/deleteAppointment')
-def addSupplier():
-	return render_template('deleteAppointment.html')
-
-@app.route('/deleteInventory')
-def addVolunteer():
-	return render_template('deleteInventory.html')
-
 @app.route('/viewAdmin')
 def viewAdmin():
-	return render_template('viewAdmin.html')
+	results = []
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
 
-@app.route('/viewAppointment')
-def viewAppointment():
-	return render_template('viewAppointment.html')
+	c.execute("SELECT * FROM Admin")
+	results = c.fetchall()
+	print(results)
 
-@app.route('/viewClient')
-def viewClient():
-	return render_template('viewClient.html')
-
-@app.route('/viewInventory')
-def viewInventory():
-	return render_template('viewInventory.html')
+	return render_template('viewAdmin.html', data=results)
+	
 
 @app.route('/viewVolunteer')
 def viewVolunteer():
-	return render_template('viewVolunteer.html')
+	results = []
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	c.execute("SELECT * FROM Volunteer")
+	results = c.fetchall()
+	print(results)
+	return render_template('viewVolunteer.html', data=results)
+
+@app.route('/viewClient')
+def viewClient():
+	results = []
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	c.execute("SELECT * FROM Client")
+	results = c.fetchall()
+	print(results)
+	return render_template('viewClient.html', data=results)
+
+@app.route('/viewAppointment')
+def viewAppointment():
+	results = []
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	c.execute("SELECT * FROM Appointment")
+	results = c.fetchall()
+	print(results)
+	return render_template('viewAppointment.html', data=results)
+
+@app.route('/viewInventory')
+def viewInventory():
+	results = []
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	c.execute("SELECT * FROM Food")
+	results = c.fetchall()
+	print(results)
+
+	return render_template('viewInventory.html', data=results)
 
 @app.route('/editAdmin')
 def editAdmin():

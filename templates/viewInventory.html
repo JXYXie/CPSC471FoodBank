@@ -40,11 +40,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 		<table width="100%" border="1" id="theTable"> 
 			<tbody>
 				<tr> 
-					<th width="20%"><label>Barcode<br></label></th>
-					<th width="20%"><label>Name<br></label></th>
-					<th width="20%"><label>Quantity<br></label></th>
-					<th width="20%"><label>Expiry Date<br></label></th>
-					<th width="20%"><label>Foodbank Address<br></label></th>
+          {% for row in data %}
+          <tr>
+          {% for d in row %}
+              <td>{{ d }}</td>
+          {% endfor %}
+          </tr>
+      {% endfor %}
 				</tr>
 			</tbody>
 		</table>
