@@ -14,11 +14,14 @@ def hello_world():
 
 @app.route('/admin')
 def admin():
-	# global currentUser
+	global currentUser
 	# if currentUser==3:
-		return render_template('admin.html')
+	# 	return render_template('admin.html')
 	# else:
 	# 	return render_template('index.html')
+
+	return render_template('admin.html')
+
 
 #############garbage
 
@@ -40,52 +43,68 @@ def signup():
 
 @app.route('/reqform')
 def reqform():
+
 	return render_template('reqform.html')
 
-@app.route('/loginAccount')
+@app.route('/loginAccount', methods=['POST'])
 def loginAccount():
 	# open connection
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 
+	# c.execute(
+	# 	"INSERT INTO Client (name, email, username, password, income) VALUES ('{name}','{email}','{username}', '{password}', '{income}')".format(
+	# 		name=request.form['name'],
+	# 		email=request.form['email'],
+	# 		username=request.form['username'],
+	# 		password=request.form['password'],
+	# 		income=request.form['income']))
+	# t=(request.form['name'])
+	# temp = (t,)
+	# c.execute('SELECT * FROM Client WHERE name=?', temp)
+	# key = c.fetchone()[0]
+
 
 	if request.form['user'] == 'client':
-				c.execute("SELECT * FROM Client")
-				results = c.fetchall()
-
-				for x in results:
-						if x[3] == request.form['username']:
-								if x[4] == request.form['password']:
-										currentUser = 1
-										conn.commit()
-										conn.close()
-										return redirect('/')
+		c.execute("SELECT * FROM Client")
+		results = c.fetchall()
+		print("checking clients")
+		for x in results:
+			if x[3] == request.form['username']:
+				if x[4] == request.form['password']:
+					currentUser = 1
+					conn.commit()
+					conn.close()
+					print(currentUser)
+					return redirect('/')
 
 
 	elif request.form['user'] == 'volunteer':
-				c.execute("SELECT * FROM Volunteer WHERE username=?")
-				results = c.fetchone()[0]
+		c.execute("SELECT * FROM Volunteer")
+		results = c.fetchall()
 
-				for x in results:
-						if x[4] == request.form['username']:
-								if x[5] == request.form['password']:
-										currentUser = 2
-										conn.commit()
-										conn.close()
-										return redirect('/')
+		for x in results:
+			if x[4] == request.form['username']:
+				if x[5] == request.form['password']:
+					currentUser = 2
+					conn.commit()
+					conn.close()
+					print(currentUser)
+					return redirect('/')
 
 
 	elif request.form['user'] == 'admin':
-				c.execute("SELECT * FROM Admin WHERE username=?")
-				results = c.fetchone()[0]
+		c.execute("SELECT * FROM Admin")
+		results = c.fetchall()
 
-				for x in results:
-						if x[4] == request.form['username']:
-								if x[5] == request.form['password']:
-										currentUser = 3
-										conn.commit()
-										conn.close()
-										return redirect('/admin')
+		for x in results:
+			if x[4] == request.form['username']:
+				if x[5] == request.form['password']:
+					currentUser = 3
+					conn.commit()
+					conn.close()
+					print(currentUser)
+					return redirect('/admin')
 
 				
 
@@ -178,7 +197,6 @@ def addClientUser():
 	c.execute('SELECT * FROM Client WHERE name=?', temp)
 	key = c.fetchone()[0]
 
-	#need to do this for all dependents?  how to for loop lmao
 	c.execute(
 		"INSERT INTO Dependant (clientid,name,relationship) VALUES ('{clientid}','{name}','{relationship}')".format(
 			clientid=key,
@@ -358,6 +376,8 @@ def viewInventory():
 
 @app.route('/viewOrder')
 def viewOrder():
+	#if currentUser==2 or currentUser==3:
+
 	results = []
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
@@ -367,6 +387,9 @@ def viewOrder():
 	print(results)
 
 	return render_template('viewOrder.html', data=results)
+	#else:
+	#	return redirect('/')
+
 
 @app.route('/deleteAdminUser',methods=['POST'])
 def deleteAdminUser():
@@ -452,6 +475,15 @@ def deleteAppointment():
 @app.route('/deleteInventory')
 def deleteInventory():
 	return render_template('deleteInventory.html')
+
+
+@app.route('/finishOrder')
+def finishOrder():
+
+
+
+
+	return redirect('/')
 
 # @app.route('/editAdmin')
 # def editAdmin():
