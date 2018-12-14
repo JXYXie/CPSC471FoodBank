@@ -1,7 +1,7 @@
 
 from flask import Flask, render_template, request, redirect
 import sqlite3
-import random as rnd
+import datetime
 
 app = Flask(__name__)
 
@@ -31,7 +31,7 @@ def loginClient():
 	return render_template('index.html')
 	
 
-####################
+###################
 
 @app.route('/login')
 def login():
@@ -179,27 +179,31 @@ def addInventoryData():
 	conn.close()
 	return redirect('/')
 
+#client = 0, volunter = 1, admin = 2
 
 @app.route('/register', methods=['POST'])
 def addClientUser():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 
+
 	c.execute(
-		"INSERT INTO Client (name, email, username, password, income) VALUES ('{name}','{email}','{username}', '{password}', '{income}')".format(
+		"INSERT INTO Account (name, email, username, password, accounttype) VALUES ('{name}','{email}','{username}', '{password}', '{accounttype}')".format(
 			name=request.form['name'],
 			email=request.form['email'],
 			username=request.form['username'],
 			password=request.form['password'],
-			income=request.form['income']))
-	t=(request.form['name'])
-	temp = (t,)
-	c.execute('SELECT * FROM Client WHERE name=?', temp)
-	key = c.fetchone()[0]
+			accounttype=0))
+
+	account_id = c.lastrowid
+	c.execute(
+		"INSERT INTO Client (income,accountid) VALUES ('{income}','{accountid}')".format(
+			income=request.form['income'],
+			accountid=account_id))
 
 	c.execute(
 		"INSERT INTO Dependant (clientid,name,relationship) VALUES ('{clientid}','{name}','{relationship}')".format(
-			clientid=key,
+			clientid=account_id,
 			name=request.form['dname1'],
 			relationship=request.form['relation1']))
 	
@@ -346,7 +350,7 @@ def viewClient():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 
-	c.execute("SELECT * FROM Client")
+	c.execute("SELECT * FROM Account INNER JOIN Client ON Account.id=Client.accountid")
 	results = c.fetchall()
 	print(results)
 	return render_template('viewClient.html', data=results)
@@ -419,10 +423,11 @@ def deleteVolunteerUser():
 @app.route('/deleteClientUser',methods=['POST'])
 def deleteClientUser():
 	conn = sqlite3.connect('foodbank.db')
+	conn.execute("PRAGMA foreign_keys = ON")
 	c = conn.cursor()
 	t = (request.form['id'])
 	temp = (t,)
-	c.execute("DELETE FROM Client WHERE id=?", temp)
+	c.execute("DELETE FROM Account WHERE id=?", temp)
 	
 	conn.commit()
 	conn.close()
