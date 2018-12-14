@@ -6,7 +6,12 @@ import datetime
 app = Flask(__name__)
 
 currentUser = 0
+currentId=0
 #where 1 = client, 2 = user, 3 = admin
+
+
+
+
 
 @app.route('/')
 def hello_world():
@@ -116,40 +121,81 @@ def loginAccount():
 
 @app.route('/addreqform', methods=['POST'])
 def addreqform():
-	conn = sqlite3.connect('foodbank.db')
-	c = conn.cursor()
-	c.execute(
-		"INSERT INTO RequestForm (fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid, date) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}', '{date}' )".format(
-			fruits=request.form['freshfruit'],
-			vegetables=request.form['carrot'],
-			potatoBags=request.form['potato'],
-			eggs=request.form['eggs'],
-			butter=request.form['butt'],
-			groundBeef=request.form['beef'],
-			wholeChicken=request.form['chicken'],
-			veggieFrozen=request.form['frovege'],
-			bread=request.form['bread'],
-			cannedVeggie=request.form['vege'],
-			cannedFruit=request.form['fruit'],
-			cannedSoup=request.form['soup'],
-			cannedSeafood=request.form['cseafood'],
-			cannedMeat=request.form['cmeat'],
-			clientid=request.form['id'],
-			date=request.form['pickupdate']))
+	error=None
+	if(currentUser==1):
 
-	conn.commit()
-	conn.close()
-	return redirect('/')
+		conn = sqlite3.connect('foodbank.db')
+		c = conn.cursor()
+
+		t = (currentId)
+		temp = (t,)
+		famSize = c.execute("SELECT count(*) FROM Dependant WHERE id=?",temp)+1
+
+
+
+		c.execute(
+			"INSERT INTO RequestForm (fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid, date) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}', '{date}' )".format(
+				fruits=request.form['freshfruit'],
+				vegetables=request.form['carrot'],
+				potatoBags=request.form['potato'],
+				eggs=request.form['eggs'],
+				butter=request.form['butt'],
+				groundBeef=request.form['beef'],
+				wholeChicken=request.form['chicken'],
+				veggieFrozen=request.form['frovege'],
+				bread=request.form['bread'],
+				cannedVeggie=request.form['vege'],
+				cannedFruit=request.form['fruit'],
+				cannedSoup=request.form['soup'],
+				cannedSeafood=request.form['cseafood'],
+				cannedMeat=request.form['cmeat'],
+				clientid=currentId))
+
+		conn.commit()
+		conn.close()
+	else:
+		error = "You must be logged in as a client to access this page"
+	return render_template('index.html',error)
 
 @app.route('/addAppointmentData', methods=['POST'])
 def addAppointmentData():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
-	c.execute(
-		"INSERT INTO Appointment (time, clientid, volunteerid ) VALUES ('{time}', '{clientid}','{volunteerid}')".format(
-			time=request.form['date'],
-			clientid=request.form['cID'],
-			volunteerid=request.form['vID']))
+	volunteerExists = False
+	clientExists=False
+	t = (request.form['vID'])
+	temp = (t,)
+	for row in c.execute("SELECT * FROM Account WHERE id=?",temp):
+		volunteerExists=True
+		break
+	else:
+		print("volunteer not found")
+
+	t = (request.form['cID'])
+	temp = (t,)
+	for row in c.execute("SELECT * FROM Account WHERE id=?",temp):
+		clientExists=True
+		break
+	else:
+		print("client not found")
+	
+	t = (request.form['time'])
+	print(t+" this is time from form")
+	#https://stackabuse.com/converting-strings-to-datetime-in-python/
+	date_time_obj = datetime.datetime.strptime(t, '%Y-%m-%dT%H:%M')
+	current = datetime.datetime.now()+datetime.timedelta(days=1)
+	#print(current)
+	#print(date_time_obj < current)
+	#print("above is bool")
+
+	#ensure that appointment times are at least 1 day away
+	if (date_time_obj<current):
+		if (volunteerExists and clientExists):
+			c.execute(
+				"INSERT INTO Appointment (time, clientid, volunteerid ) VALUES ('{time}', '{clientid}','{volunteerid}')".format(
+					time=request.form['time'],
+					clientid=request.form['cID'],
+					volunteerid=request.form['vID']))
 	conn.commit()
 	conn.close()
 	return redirect('/')
@@ -180,7 +226,7 @@ def addInventoryData():
 	return redirect('/')
 
 #client = 0, volunter = 1, admin = 2
-
+#done
 @app.route('/register', methods=['POST'])
 def addClientUser():
 	conn = sqlite3.connect('foodbank.db')
@@ -201,52 +247,96 @@ def addClientUser():
 			income=request.form['income'],
 			accountid=account_id))
 
-	c.execute(
-		"INSERT INTO Dependant (clientid,name,relationship) VALUES ('{clientid}','{name}','{relationship}')".format(
-			clientid=account_id,
-			name=request.form['dname1'],
-			relationship=request.form['relation1']))
+	#name=request.form['dname1']
+
+	for _ in range(1,4):
+		varname = 'dname'+str(_)
+		relname = 'relation'+str(_)
+		name=request.form[varname]
+		if (name!=''):
+			c.execute(
+				"INSERT INTO Dependant (clientid,name,relationship) VALUES ('{clientid}','{name}','{relationship}')".format(
+					clientid=account_id,
+					name=request.form[varname],
+					relationship=request.form[relname]))
+		reasonname = 'reason'+str(_)
+		reasonvar=request.form[reasonname]
+		if (reasonvar!=''):
+			c.execute(
+				"INSERT INTO Reasons (clientid,reason) VALUES ('{clientid}','{reason}')".format(
+					clientid=account_id,
+					reason=request.form[reasonname]))
 	
 	conn.commit()
 	conn.close()
 	return redirect('/')
 
+#done
 @app.route('/addAdminUser', methods=['POST'])
 def addAdminUser():
-	# open connection
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 
-	# TODO: get the data from form
-	# username = request.form['username']
-
-	# TODO: put datat in
 	c.execute(
-		"INSERT INTO Admin (name, phonenumber, email, username, password) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}')".format(
+		"INSERT INTO Account (name, email, username, password, accounttype) VALUES ('{name}','{email}','{username}', '{password}', '{accounttype}')".format(
 			name=request.form['name'],
-			phonenumber=request.form['phone'],
 			email=request.form['email'],
 			username=request.form['username'],
-			password=request.form['password']))
+			password=request.form['password'],
+			accounttype=2))
+	account_id = c.lastrowid
+	c.execute(
+		"INSERT INTO Admin (phonenumber,accountid) VALUES ('{phonenumber}','{accountid}')".format(
+			phonenumber=request.form['phone'],
+			accountid=account_id))
 	
 	conn.commit()
 	conn.close()
 	return redirect('/admin')
 
+#done
 @app.route('/addVolunteerUser', methods=['POST'])
 def addVolunteerUser():
-	# open connection
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
+	
+	t = (request.form['mID'])
+	temp = (t,)
+	#https://stackoverflow.com/questions/30041983/check-if-a-row-exists-in-sqlite3?rq=1
+	for row in c.execute("SELECT * FROM Account WHERE id=?",temp):
+		c.execute(
+			"INSERT INTO Account (name, email, username, password, accounttype) VALUES ('{name}','{email}','{username}', '{password}', '{accounttype}')".format(
+				name=request.form['name'],
+				email=request.form['email'],
+				username=request.form['username'],
+				password=request.form['password'],
+				accounttype=1))
+		account_id = c.lastrowid
+		c.execute(
+			"INSERT INTO Volunteer (phonenumber,availability,accountid,managerid) VALUES ('{phonenumber}','{availability}','{accountid}','{managerid}')".format(
+				phonenumber=request.form['phone'],
+				availability=request.form['availability'],
+				accountid=account_id,
+				managerid=request.form['mID']))
+		break
+	else:
+		print("not found")
 
-	c.execute(
-		"INSERT INTO Volunteer (name, phonenumber, email,  username, password, availability) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}','{availability}')".format(
-			name=request.form['name'],
-			phonenumber=request.form['phone'],
-			email=request.form['email'],
-			username=request.form['username'],
-			password=request.form['password'],
-			availability=request.form['availability']))
+
+	# c.execute(
+	# 	"INSERT INTO Account (name, email, username, password, accounttype) VALUES ('{name}','{email}','{username}', '{password}', '{accounttype}')".format(
+	# 		name=request.form['name'],
+	# 		email=request.form['email'],
+	# 		username=request.form['username'],
+	# 		password=request.form['password'],
+	# 		accounttype=1))
+	# account_id = c.lastrowid
+	# c.execute(
+	# 	"INSERT INTO Volunteer (phonenumber,availability,accountid,managerid) VALUES ('{phonenumber}','{availability}','{accountid}','{managerid}')".format(
+	# 		phonenumber=request.form['phone'],
+	# 		availability=request.form['availability'],
+	# 		accountid=account_id,
+	# 		managerid=request.form['mID']))
 	
 	conn.commit()
 	conn.close()
@@ -264,9 +354,29 @@ def addAppointment():
 def addDonor():
 	return render_template('addDonor.html')
 
+#done
+@app.route('/addDonorData')
+def addDonorData():
+
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	c.execute(
+		"INSERT INTO Donor (name,phonenumber,email) VALUES ('{name}','{phonenumber}','{email}')".format(
+			name=request.form['name'],
+			phonenumber=request.form['phonenumber'],
+			email=request.form['email']))
+	
+	conn.commit()
+	conn.close()
+
+
+	return redirect('/admin')
+
 @app.route('/addFunds')
 def addFunds():
 	return render_template('addFunds.html')
+
 
 @app.route('/addInventory')
 def addInventory():
@@ -280,6 +390,27 @@ def addSupplier():
 def addVolunteer():
 	return render_template('addVolunteer.html')
 
+#done but add page
+@app.route('/addFoodBankData')
+def addFoodBankData():
+
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	c.execute(
+		"INSERT INTO Foodbank (address,phonenumber,email,hours,funds) VALUES ('{address}','{phonenumber}','{email}', '{hours}', '{funds}')".format(
+			address=request.form['address'],
+			phonenumber=request.form['phonenumber'],
+			email=request.form['email'],
+			hours=request.form['funds']))
+	
+	conn.commit()
+	conn.close()
+	return redirect('/admin')
+
+@app.route('/addFoodBank')
+def addFoodBank():
+	return render_template('addFoodBank.html')
 
 @app.route('/editAdminUser', methods=['POST'])
 def editAdminUser():
@@ -326,7 +457,8 @@ def viewAdmin():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 
-	c.execute("SELECT * FROM Admin")
+	c.execute("SELECT * FROM Account INNER JOIN Admin ON Account.id=Admin.accountid")
+
 	results = c.fetchall()
 	print(results)
 
@@ -344,6 +476,7 @@ def viewVolunteer():
 	print(results)
 	return render_template('viewVolunteer.html', data=results)
 
+#done
 @app.route('/viewClient')
 def viewClient():
 	results = []

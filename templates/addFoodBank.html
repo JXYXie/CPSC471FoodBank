@@ -30,24 +30,41 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">Add Appointment</h1>
+  <h1 class="w3-margin w3-jumbo">Add Food Bank Details</h1>
 </header>
+
+<!-- CREATE TABLE Foodbank(  
+    address         TEXT PRIMARY KEY NOT NULL,
+    phonenumber		TEXT NOT NULL,
+    email           TEXT NOT NULL,
+    hours           TEXT NOT NULL,
+    funds           REAL NOT NULL
+); -->
+
 
 <!-- First Grid -->
 <div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
 
       
-      <form action="/addAppointmentData" method="post">
+      <form action="/addFoodBankData" method="post">
       
-      <label>Date (local time!)<br></label>
-      <input style="width: 100%; padding: 10px" type="datetime-local" name="time" required>
+  
+      <label><br>Address<br></label>
+      <input style="width: 100%; padding: 10px" type="text" placeholder="Address of foodbank" name="address" required>
       
-      <label><br>Volunteer ID<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="00" name="vID" required>
-       
-      <label><br>Client ID<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="00" name="cID" required>
+
+      <label><br>Phone Number<br></label>
+      <input style="width: 100%; padding: 10px" type="text" placeholder="5879660788" name="phone" pattern="[0-9]{10}" required>
+ 
+      <label><br>E-mail<br></label>
+      <input style="width: 100%; padding: 10px" type="email" placeholder="example@ucalgary.ca" name="email" required>
+
+      <label><br>Hours of Operation (as a string)<br></label>
+      <input style="width: 100%; padding: 10px" type="text" placeholder="hours" name="hours" required>
+
+      <label><br>Funds<br></label>
+      <input style="width: 100%; padding: 10px" type="number" min="0" placeholder="400" name="funds" required>
       
       <br><br>
       <button style="width: 100%; padding: 10px" type="submit">Submit</button>

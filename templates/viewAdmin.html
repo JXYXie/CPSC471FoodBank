@@ -33,6 +33,20 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   <h1 class="w3-margin w3-jumbo">View Admins</h1>
 </header>
 
+<!-- CREATE TABLE Account(
+	id				INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+	name			TEXT NOT NULL,
+	email			TEXT NOT NULL,
+	username		TEXT NOT NULL,
+	password		TEXT NOT NULL,
+	accounttype		INTEGER NOT NULL
+);
+
+CREATE TABLE Admin(
+    phonenumber		TEXT,
+	accountid		INTEGER PRIMARY KEY UNIQUE REFERENCES Account(id) ON UPDATE CASCADE ON DELETE CASCADE
+); -->
+
 <!-- First Grid -->
 <div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
@@ -43,10 +57,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 			<tr>
 			<td width="16%">Admin ID</td>
 			<td width="16%">Name</td>
-			<td width="16%">Phone Number</td>
+
 			<td width="16%">Email</td>
 			<td width="16%">Username</td>
-			<td width="16%">Pasword</td>
+			<td width="16%">Password</td>
+      			<td width="16%">accounttype</td>
+      			<td width="16%">Phone Number</td>
+      			<td width="16%">AcccountId</td>
 			</tr>
 				<tr> 
           {% for row in data %}
