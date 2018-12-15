@@ -122,6 +122,7 @@ def loginAccount():
 @app.route('/addreqform', methods=['POST'])
 def addreqform():
 	error=None
+	currentUser=1
 	if(currentUser==1):
 
 		conn = sqlite3.connect('foodbank.db')
@@ -129,12 +130,12 @@ def addreqform():
 
 		t = (currentId)
 		temp = (t,)
-		famSize = c.execute("SELECT count(*) FROM Dependant WHERE id=?",temp)+1
+		famSize = c.execute("SELECT count(*) FROM Dependant WHERE clientid=?",temp)
 
 
 
 		c.execute(
-			"INSERT INTO RequestForm (fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid, date) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}', '{date}' )".format(
+			"INSERT INTO RequestForm (fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}' )".format(
 				fruits=request.form['freshfruit'],
 				vegetables=request.form['carrot'],
 				potatoBags=request.form['potato'],
@@ -155,7 +156,7 @@ def addreqform():
 		conn.close()
 	else:
 		error = "You must be logged in as a client to access this page"
-	return render_template('index.html',error)
+	return render_template('index.html',error=error)
 
 @app.route('/addAppointmentData', methods=['POST'])
 def addAppointmentData():
@@ -323,20 +324,6 @@ def addVolunteerUser():
 		print("not found")
 
 
-	# c.execute(
-	# 	"INSERT INTO Account (name, email, username, password, accounttype) VALUES ('{name}','{email}','{username}', '{password}', '{accounttype}')".format(
-	# 		name=request.form['name'],
-	# 		email=request.form['email'],
-	# 		username=request.form['username'],
-	# 		password=request.form['password'],
-	# 		accounttype=1))
-	# account_id = c.lastrowid
-	# c.execute(
-	# 	"INSERT INTO Volunteer (phonenumber,availability,accountid,managerid) VALUES ('{phonenumber}','{availability}','{accountid}','{managerid}')".format(
-	# 		phonenumber=request.form['phone'],
-	# 		availability=request.form['availability'],
-	# 		accountid=account_id,
-	# 		managerid=request.form['mID']))
 	
 	conn.commit()
 	conn.close()

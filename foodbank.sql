@@ -81,7 +81,7 @@ CREATE TABLE Foodbank(
 
 
 CREATE TABLE MaxRequests(
-    famSize     INTEGER PRIMARY KEY UNIQUE
+    famSize     INTEGER PRIMARY KEY UNIQUE,
     fruits          INTEGER NOT NULL,
     vegetables      INTEGER NOT NULL,
     potatoBags      INTEGER NOT NULL,
@@ -98,10 +98,10 @@ CREATE TABLE MaxRequests(
     cannedMeat      INTEGER NOT NULL
 );
 
-INSERT INTO MaxRequests (famSize,fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat) VALUES (1,4,3,1,0.5,1,1,1,2,1,1,1,4,2,1)
-INSERT INTO MaxRequests (famSize,fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat) VALUES (2,6,6,2,0.5,1,1,1,2,2,2,2,5,2,1)
-INSERT INTO MaxRequests (famSize,fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat) VALUES (3,12,8,2,1,1,1,2,2,2,4,4,6,3,2)
-INSERT INTO MaxRequests (famSize,fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat) VALUES (4,16,10,3,2,1,2,1,2,3,6,6,7,4,3)
+INSERT INTO MaxRequests (famSize,fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat) VALUES (1,4,3,1,0.5,1,1,1,2,1,1,1,4,2,1);
+INSERT INTO MaxRequests (famSize,fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat) VALUES (2,6,6,2,0.5,1,1,1,2,2,2,2,5,2,1);
+INSERT INTO MaxRequests (famSize,fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat) VALUES (3,12,8,2,1,1,1,2,2,2,4,4,6,3,2);
+INSERT INTO MaxRequests (famSize,fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat) VALUES (4,16,10,3,2,1,2,1,2,3,6,6,7,4,3);
 
 CREATE TABLE RequestForm(
     id 		        INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -119,7 +119,8 @@ CREATE TABLE RequestForm(
     cannedSoup      INTEGER NOT NULL,
     cannedSeafood   INTEGER NOT NULL,
     cannedMeat      INTEGER NOT NULL,
-    clientid        INTEGER NOT NULL
+    clientid        INTEGER NOT NULL REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE,
+    volunteerid     INTEGER REFERENCES Volunteer(accountid) ON UPDATE CASCADE ON DELETE CASCADE
     -- FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE ON DELETE CASCADE,
     -- FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -175,7 +176,7 @@ CREATE TABLE Takes(
 
 --done
 CREATE TABLE Foodstore(
-    barcode     INTEGER NOT NULL,
+    refcode     INTEGER NOT NULL,
     foodname    TEXT NOT NULL,
     quantity    INTEGER NOT NULL,
     expirydate        TEXT NOT NULL,
