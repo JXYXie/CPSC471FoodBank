@@ -6,11 +6,8 @@ import datetime
 app = Flask(__name__)
 
 currentUser = 0
-currentId=2
+currentId=4
 #where 1 = client, 2 = user, 3 = admin
-
-
-
 
 
 @app.route('/')
@@ -52,14 +49,7 @@ def reqform():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 
-	t = (currentId)
-	temp = (t,)
-	cursor = c.execute("SELECT * FROM Dependant WHERE clientid=?",temp)
-	famSize = len(cursor.fetchall())
-	t=(famSize)
-	temp = (t,)
-	c.execute("SELECT * FROM MaxRequests WHERE famSize=?",temp)
-
+	c.execute("SELECT * FROM MaxRequests")
 	results = c.fetchall()
 
 	return render_template('reqform.html', data=results)
@@ -124,7 +114,6 @@ def loginAccount():
 					print(currentUser)
 					return redirect('/admin')
 
-				
 
 	conn.commit()
 	conn.close()
@@ -143,31 +132,69 @@ def addreqform():
 		t = (currentId)
 		temp = (t,)
 		cursor = c.execute("SELECT * FROM Dependant WHERE clientid=?",temp)
-		famSize = len(cursor.fetchall())
+		famSize = len(cursor.fetchall()) + 1
+		print(famSize)
 
+		t = (famSize)
+		temp = (t,)
+		print(temp)
+		cursor = c.execute("SELECT * FROM MaxRequests WHERE famSize=?",temp)
+		max = cursor.fetchone()
+		print(max)
+		max = list(max)
+		max.pop(0)
+
+		a=[]
+		a.append(request.form['freshfruit']),
+		a.append(request.form['carrot']),
+		a.append(request.form['potato']),
+		a.append(request.form['eggs']),
+		a.append(request.form['butt']),
+		a.append(request.form['beef']),
+		a.append(request.form['chicken']),
+		a.append(request.form['frovege']),
+		a.append(request.form['bread']),
+		a.append(request.form['vege']),
+		a.append(request.form['fruit']),
+		a.append(request.form['soup']),
+		a.append(request.form['cseafood']),
+		a.append(request.form['cmeat']),		
+		a=list(map(int,a))
+		print(a)
+		allSmaller = True
+		print(max)
+		for _ in range(len(max)):
+			if (a[_]>max[_]):
+				allSmaller = False
+				break
+		print(allSmaller)
 		t = (request.form['date'])
 		date_time_obj = datetime.datetime.strptime(t, '%Y-%m-%dT%H:%M')
 		current = datetime.datetime.now()+datetime.timedelta(days=1)
 
 		if (date_time_obj>current):
-			c.execute(
-				"INSERT INTO RequestForm (fruits, vegetables, potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid, date) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}' , '{date}')".format(
-					fruits=request.form['freshfruit'],
-					vegetables=request.form['carrot'],
-					potatoBags=request.form['potato'],
-					eggs=request.form['eggs'],
-					butter=request.form['butt'],
-					groundBeef=request.form['beef'],
-					wholeChicken=request.form['chicken'],
-					veggieFrozen=request.form['frovege'],
-					bread=request.form['bread'],
-					cannedVeggie=request.form['vege'],
-					cannedFruit=request.form['fruit'],
-					cannedSoup=request.form['soup'],
-					cannedSeafood=request.form['cseafood'],
-					cannedMeat=request.form['cmeat'],
-					clientid=currentId,
-					date=request.form['date']))
+			print("OuterIf")
+			if (allSmaller):
+				c.execute(
+					"INSERT INTO RequestForm (fruits, vegetables, potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid, date) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}' , '{date}')".format(
+						fruits=request.form['freshfruit'],
+						vegetables=request.form['carrot'],
+						potatoBags=request.form['potato'],
+						eggs=request.form['eggs'],
+						butter=request.form['butt'],
+						groundBeef=request.form['beef'],
+						wholeChicken=request.form['chicken'],
+						veggieFrozen=request.form['frovege'],
+						bread=request.form['bread'],
+						cannedVeggie=request.form['vege'],
+						cannedFruit=request.form['fruit'],
+						cannedSoup=request.form['soup'],
+						cannedSeafood=request.form['cseafood'],
+						cannedMeat=request.form['cmeat'],
+						clientid=currentId,
+						date=request.form['date']))
+			else:
+				error = "Too much food requested for the client's current family size"
 		else:
 			error = "Invalid date and time, please pick a future date and time."
 		conn.commit()
@@ -437,42 +464,6 @@ def addFoodBankData():
 @app.route('/addFoodBank')
 def addFoodBank():
 	return render_template('addFoodBank.html')
-
-@app.route('/editAdminUser', methods=['POST'])
-def editAdminUser():
-	# open connection
-	conn = sqlite3.connect('foodbank.db')
-	c = conn.cursor()
-
-	newName = ""
-	newPhone = ""
-
-	c.execute("SELECT * FROM Admin WHERE id=?", (request.form['id']))
-	results = c.fetchone()
-	if results is not None:
-				if request.form['name'] != "":
-						newName = request.form['name']
-				else:
-						c.execute("SELECT name FROM Admin WHERE id=?", (request.form['id']))
-						newName = c.fetchone()[0]
-						
-				if request.form['phone'] != "":
-						newPhone = request.form['phone']
-				else:
-						c.execute("SELECT phonenumber FROM Admin WHERE id=?", (request.form['id']))
-						newPhone = c.fetchone()[0]
-
-	c.execute(
-		"INSERT INTO Admin (name, phonenumber, email, username, password) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}')".format(
-			name=request.form['name'],
-			phonenumber=request.form['phone'],
-			email=request.form['email'],
-			username=request.form['username'],
-			password=request.form['password']))
-	
-	conn.commit()
-	conn.close()
-	return redirect('/admin')
 
 @app.route('/viewAdmin')
 def viewAdmin():

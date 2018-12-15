@@ -187,6 +187,10 @@ CREATE TABLE Foodstore(
 INSERT INTO Account(name, email, username, password, accounttype) VALUES ("Administrator One", "csus@ucalgary.ca", "csus", "cpsc2018", 2);
 INSERT INTO Admin (phonenumber, accountid) VALUES (4031111111,1);
 
-INSERT INTO Account(name, email, username, password, accounttype) VALUES ("Rahmanta Nadhif", "ceo@nadramon.com", "nadramon", "0123", 0);
-INSERT INTO Client (income, accountid) VALUES (350,2)
+INSERT INTO Account(name, email, username, password, accounttype) VALUES ("Rahmanta Nadhif", "ceo@nadramon.com", "nadramon", "12321", 0);
+INSERT INTO Client (income, accountid) VALUES (350,2);
+INSERT INTO Dependant (clientid,name,relationship) VALUES (2, "Alfath Zakir", "Husband");
+
+INSERT INTO Account(name, email, username, password, accounttype) VALUES ("Shayne Mujuru", "shayne@ucalgary.ca", "east", "111111", 1);
+INSERT INTO Volunteer (phonenumber,availability, accountid,managerid) VALUES (4032141115,"Monday Tuesday Wednesday Thursday Friday",3,1);
 

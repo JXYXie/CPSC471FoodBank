@@ -44,6 +44,37 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       {% endif %} 
         </p>
 
+		<table width="100%" border="1" id="theTable"> 
+			<tbody>
+          <tr>
+              <td width="6%">Family Size</td>
+              <td width="6%">Max Fruits</td>
+              <td width="6%">Max Vegetables</td>
+              <td width="6%">Max Potato Bags</td>
+              <td width="6%">Max Eggs</td>
+              <td width="6%">Max Butter</td>
+              <td width="6%">Max Ground Beef</td>
+              <td width="6%">Max Whole Chicken</td>
+              <td width="6%">Max Veggie Frozen</td>
+              <td width="6%">Max Bread</td>
+              <td width="6%">Max Canned Veggie</td>
+              <td width="6%">Max Canned Fruit</td>
+              <td width="6%">Max Canned Soup</td>
+              <td width="6%">Max Canned Seafood</td>
+              <td width="6%">Max Canned Meat</td>
+              </tr>
+				<tr>
+          {% for row in data %}
+          <tr>
+          {% for d in row %}
+              <td>{{ d }}</td>
+          {% endfor %}
+          </tr>
+      {% endfor %}
+				</tr>
+			</tbody>
+		</table>
+        <br><br>
         <label>Enter the number of fresh fruits<br></label>
         <input style="width: 100%; padding: 10px" type="number" value="0" name="freshfruit" min=0>
         
