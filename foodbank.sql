@@ -52,7 +52,7 @@ CREATE TABLE Appointment(
     id 		        INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     time		    TEXT NOT NULL,
     volunteerid     INTEGER NOT NULL,
-    clientid      INTEGER NOT NULL,
+    clientid        INTEGER NOT NULL,
     FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -157,6 +157,7 @@ CREATE TABLE Supplies(
 CREATE TABLE Donates(
     donorid         INTEGER NOT NULL,
     foodbarcode     INTEGER NOT NULL,
+    quantity        INTEGER NOT NULL,
     PRIMARY KEY(donorid, foodbarcode),
     FOREIGN KEY(donorid) REFERENCES Donor(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE ON DELETE CASCADE
@@ -166,6 +167,7 @@ CREATE TABLE Donates(
 CREATE TABLE Takes(
     clientid        INTEGER NOT NULL,
     foodbarcode     INTEGER NOT NULL,
+    quantity        INTEGER NOT NULL,
     PRIMARY KEY(clientid, foodbarcode),
     FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE ON DELETE CASCADE
