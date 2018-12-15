@@ -172,6 +172,9 @@ def addreqform():
 		date_time_obj = datetime.datetime.strptime(t, '%Y-%m-%dT%H:%M')
 		current = datetime.datetime.now()+datetime.timedelta(days=1)
 
+		c.execute("SELECT * FROM MaxRequests")
+		results = c.fetchall()
+
 		if (date_time_obj>current):
 			print("OuterIf")
 			if (allSmaller):
@@ -201,7 +204,7 @@ def addreqform():
 		conn.close()
 	else:
 		error = "You must be logged in as a client to access this page"
-	return render_template('reqform.html',error=error)
+	return render_template('reqform.html',error=error,data=results)
 
 @app.route('/addAppointmentData', methods=['POST'])
 def addAppointmentData():
@@ -628,11 +631,13 @@ def deleteAppointment():
 def deleteInventory():
 	return render_template('deleteInventory.html')
 
+@app.route('/finishOrderPage')
+def finishOrderPage():
+	return render_template('finishOrderPage.html')
 
-@app.route('/finishOrder')
+
+@app.route('/finishOrder',methods=['POST'])
 def finishOrder():
-
-
 
 
 	return redirect('/')
