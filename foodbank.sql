@@ -12,53 +12,58 @@ CREATE TABLE Account(
 
 CREATE TABLE Admin(
     phonenumber		TEXT,
-	accountid		INTEGER PRIMARY KEY UNIQUE REFERENCES Account(id) ON UPDATE CASCADE ON DELETE CASCADE
+	accountid		INTEGER PRIMARY KEY UNIQUE,
+    FOREIGN KEY(accountid) REFERENCES Account(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Volunteer(
     phonenumber		TEXT,
     availability    TEXT,
-	accountid		INTEGER UNIQUE REFERENCES Account(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    managerid       INTEGER REFERENCES Admin(accountid) ON UPDATE CASCADE ON DELETE CASCADE
+	accountid		INTEGER PRIMARY KEY UNIQUE,
+    managerid       INTEGER,
+    FOREIGN KEY(accountid) REFERENCES Account(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(managerid) REFERENCES Admin(accountid) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Client(
     income 		    INTEGER,
-	accountid		INTEGER PRIMARY KEY UNIQUE REFERENCES Account(id) ON UPDATE CASCADE ON DELETE CASCADE
+	accountid		INTEGER PRIMARY KEY UNIQUE,
+    FOREIGN KEY(accountid) REFERENCES Account(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
-
 
 --done
 CREATE TABLE DietaryRestrictions(
-    accountid		INTEGER REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE,
+    accountid		INTEGER,
     dietaryrestriction TEXT NOT NULL,
-    PRIMARY KEY (accountid,dietaryrestriction)
+    PRIMARY KEY(accountid,dietaryrestriction),
+    FOREIGN KEY(accountid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 --done
 CREATE TABLE Reasons(
-    clientid		INTEGER REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE,
-    reason	    TEXT NOT NULL,
-    PRIMARY KEY (clientid,reason)
-    -- FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
+    clientid		INTEGER,
+    reason	        TEXT NOT NULL,
+    PRIMARY KEY (clientid,reason),
+    FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 --done
 CREATE TABLE Appointment(
     id 		        INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     time		    TEXT NOT NULL,
-    volunteerid     INTEGER NOT NULL REFERENCES Volunteer(accountid) ON UPDATE CASCADE ON DELETE CASCADE,
-    clientid      INTEGER NOT NULL REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
-    -- FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE,
-    -- FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
+    volunteerid     INTEGER NOT NULL,
+    clientid      INTEGER NOT NULL,
+    FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 --done
 CREATE TABLE Dependant(  
-    clientid		INTEGER REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE,
+    clientid		INTEGER,
     name            TEXT NOT NULL,  
     relationship    TEXT NOT NULL,
-    PRIMARY KEY (clientid,name)
+    PRIMARY KEY (clientid,name),
+    FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 --done
@@ -70,18 +75,9 @@ CREATE TABLE Foodbank(
     funds           INTEGER NOT NULL
 );
 
--- CREATE TABLE Food(  
---     barcode         INTEGER PRIMARY KEY NOT NULL,
---     name		    TEXT NOT NULL,
---     quantity        INTEGER NOT NULL,
---     expiraydate     TEXT NOT NULL,
---     foodbank        TEXT NOT NULL
---     -- FOREIGN KEY(foodbank) REFERENCES Foodbank(address) ON UPDATE CASCADE
--- );
-
 
 CREATE TABLE MaxRequests(
-    famSize     INTEGER PRIMARY KEY UNIQUE,
+    famSize         INTEGER PRIMARY KEY UNIQUE,
     fruits          INTEGER NOT NULL,
     vegetables      INTEGER NOT NULL,
     potatoBags      INTEGER NOT NULL,
@@ -119,10 +115,10 @@ CREATE TABLE RequestForm(
     cannedSoup      INTEGER NOT NULL,
     cannedSeafood   INTEGER NOT NULL,
     cannedMeat      INTEGER NOT NULL,
-    clientid        INTEGER NOT NULL REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE,
-    volunteerid     INTEGER REFERENCES Volunteer(accountid) ON UPDATE CASCADE ON DELETE CASCADE
-    -- FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    -- FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
+    clientid        INTEGER NOT NULL,
+    volunteerid     INTEGER,
+    FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 --done
@@ -141,37 +137,41 @@ CREATE TABLE Supplier(
 
 CREATE TABLE Contacts(
     adminid         INTEGER NOT NULL,
-    suppliername    TEXT NOT NULL
-    -- FOREIGN KEY(adminid) REFERENCES Admin(id) ON UPDATE CASCADE,
-    -- FOREIGN KEY(suppliername) REFERENCES Supplier(name) ON UPDATE CASCADE
+    suppliername    TEXT NOT NULL,
+    PRIMARY KEY(adminid, suppliername),
+    FOREIGN KEY(adminid) REFERENCES Admin(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(suppliername) REFERENCES Supplier(name) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Supplies(
     suppliername    TEXT NOT NULL,
-    foodbarcode     INTEGER NOT NULL
-    -- FOREIGN KEY(suppliername) REFERENCES Supplier(name) ON UPDATE CASCADE,
-    -- FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE
+    foodbarcode     INTEGER NOT NULL,
+    PRIMARY KEY(suppliername, foodbarcode),
+    FOREIGN KEY(suppliername) REFERENCES Supplier(name) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Donates(
     donorid         INTEGER NOT NULL,
-    foodbarcode     INTEGER NOT NULL
-    -- FOREIGN KEY(donorid) REFERENCES Donor(id) ON UPDATE CASCADE,
-    -- FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE
+    foodbarcode     INTEGER NOT NULL,
+    PRIMARY KEY(donorid, foodbarcode),
+    FOREIGN KEY(donorid) REFERENCES Donor(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE Prepares(
-    volunteerid     INTEGER NOT NULL,
-    foodbarcode     INTEGER NOT NULL
-    -- FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE,
-    -- FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE
-);
+-- CREATE TABLE Prepares(
+--     volunteerid     INTEGER NOT NULL,
+--     foodbarcode     INTEGER NOT NULL
+--     -- FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE,
+--     -- FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE
+-- );
 
 CREATE TABLE Takes(
     clientid        INTEGER NOT NULL,
-    foodbarcode     INTEGER NOT NULL
-    -- FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE,
-    -- FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE
+    foodbarcode     INTEGER NOT NULL,
+    PRIMARY KEY(clientid, foodbarcode),
+    FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 --done
@@ -180,5 +180,7 @@ CREATE TABLE Foodstore(
     foodname    TEXT NOT NULL,
     quantity    INTEGER NOT NULL,
     expirydate        TEXT NOT NULL,
-    address     TEXT NOT NULL REFERENCES Foodbank(address) ON UPDATE CASCADE ON DELETE CASCADE
+    address     TEXT NOT NULL,
+    PRIMARY KEY(refcode),
+    FOREIGN KEY(address) REFERENCES Foodbank(address) ON UPDATE CASCADE ON DELETE CASCADE
 );
