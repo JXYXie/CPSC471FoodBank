@@ -30,7 +30,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">Add Donor</h1>
+  <h1 class="w3-margin w3-jumbo">View Admins</h1>
 </header>
 
 <!-- First Grid -->
@@ -38,22 +38,23 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
   <div class="w3-content">
 
       
-      <form action="/addDonorData" method="post">
-      
-  
-      <label><br>Name<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Your Full Name" name="name" required>
+		<table width="100%" border="1" id="theTable"> 
+			<tbody>
+			<tr>
+			<td width="100%">Number of appointments with low income clients</td>
+			</tr>
+				<tr> 
+          {% for row in data %}
+          <tr>
+          {% for d in row %}
+              <td>{{ d }}</td>
+          {% endfor %}
+          </tr>
+      {% endfor %}
+				</tr>
+			</tbody>
+		</table>
 
-      <label><br>Phone Number<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="4031111234" name="phonenumber" pattern="[0-9]{10}" required>
- 
-      <label><br>E-mail<br></label>
-      <input style="width: 100%; padding: 10px" type="email" placeholder="example@ucalgary.ca" name="email" required>
-      
-      <br><br>
-      <button style="width: 100%; padding: 10px" type="submit">Submit</button>
-      
-      </form>
     
   </div>
 </div>

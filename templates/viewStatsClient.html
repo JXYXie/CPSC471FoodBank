@@ -30,26 +30,44 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 <!-- Header -->
 <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">Add Funds</h1>
+  <h1 class="w3-margin w3-jumbo">View Admins</h1>
 </header>
+
+<!-- CREATE TABLE Account(
+	id				INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+	name			TEXT NOT NULL,
+	email			TEXT NOT NULL,
+	username		TEXT NOT NULL,
+	password		TEXT NOT NULL,
+	accounttype		INTEGER NOT NULL
+);
+
+CREATE TABLE Admin(
+    phonenumber		TEXT,
+	accountid		INTEGER PRIMARY KEY UNIQUE REFERENCES Account(id) ON UPDATE CASCADE ON DELETE CASCADE
+); -->
 
 <!-- First Grid -->
 <div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
 
       
-      <form>
-      
-      <label>Foodbank Address<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="Enter Address" name="address" required>
-	  
-	  <label>Funds<br></label>
-      <input style="width: 100%; padding: 10px" type="number" placeholder="5000" min="1" name="funds" required>
-      
-      <br><br>
-      <button style="width: 100%; padding: 10px" type="submit">Submit</button>
-      
-      </form>
+		<table width="100%" border="1" id="theTable"> 
+			<tbody>
+			<tr>
+			<td width="100%">Number of Appointments Client has</td>
+			</tr>
+				<tr> 
+          {% for row in data %}
+          <tr>
+          {% for d in row %}
+              <td>{{ d }}</td>
+          {% endfor %}
+          </tr>
+      {% endfor %}
+				</tr>
+			</tbody>
+		</table>
 
     
   </div>

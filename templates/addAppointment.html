@@ -40,7 +40,12 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       
       <form action="/addAppointmentData" method="post">
       
-      <label>Date (local time!)<br></label>
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %} 
+        </p>
+
+      <label>Date (local time)<br></label>
       <input style="width: 100%; padding: 10px" type="datetime-local" name="time" required>
       
       <label><br>Volunteer ID<br></label>

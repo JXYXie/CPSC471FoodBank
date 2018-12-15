@@ -36,292 +36,60 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <!-- First Grid -->
 <div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
-  
-      <h5 class="w3-padding-32">The left column shows the name of the item. The right column shows the number of items you can request. The numbers from left to right
-      corresponds to the number of adults sharing the hamper. For fresh fruit, if you have 2 adults sharing the hamper, then please select 6.
-      </h5>
-  
       
       <form action="/addreqform" method="post">
       
-      <table width="100%" border="1"> 
-        <tbody>
-      
-          <tr> 
-            <th width="50%"><label>Item<br></label></th>
-            <th colspan="6"><label>Number of Objects Requested<br></label></th>
-          </tr>
-          
-          <tr> 
-            <th colspan="7"><label>Perishables<br></label></th>        
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Fresh Fruit (apples/oranges)<br></label></th>
-            <th><input type="radio" name="freshfruit" value="0" checked> 0<br></th>
-            <th><input type="radio"  name="freshfruit" value="2" > 2<br></th>
-            <th><input type="radio"  name="freshfruit" value="4" > 4<br></th>
-            <th><input type="radio"  name="freshfruit" value="6" > 6<br></th>
-            <th><input type="radio"  name="freshfruit" value="8" > 8<br></th>
-            <th><input type="radio"  name="freshfruit" value="10" > 10<br></th>
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Carrots<br></label></th>
-            <th><input type="radio" name="carrot" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="carrot" value="2" > 2<br></th>
-            <th><input type="radio"  name="carrot" value="4" > 4<br></th>
-            <th><input type="radio"  name="carrot" value="6" > 6<br></th>
-            <th><input type="radio"  name="carrot" value="8" > 8<br></th>
-            <th><input type="radio"  name="carrot" value="10" > 10<br></th>
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Potato bag (5-6 potatoes per bag)<br></label></th>
-            <th><input type="radio" name="potato" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="potato" value="1" > 1<br></th>
-            <th><input type="radio"  name="potato" value="2" > 2<br></th>
-            <th><input type="radio"  name="potato" value="3" > 3<br></th>
-            <th><input type="radio"  name="potato" value="4" > 4<br></th>
-            <th><input type="radio"  name="potato" value="5" > 5<br></th>
-          </tr>
-          
-          <!-- <tr> 
-            <th width="50%" align="left"><label>Onion<br></label></th>
-            <th><input type="radio" name="onion" checked> 0<br></th>
-            <th><input type="radio"  name="onion"> 1<br></th>
-            <th><input type="radio"  name="onion"> 1<br></th>
-            <th><input type="radio"  name="onion"> 2<br></th>
-            <th><input type="radio"  name="onion"> 2<br></th>
-            <th><input type="radio"  name="onion"> 3<br></th>
-          </tr> -->
-          
-          
-          <tr> 
-            <th colspan="7"><label>Eggs and Dairy<br></label></th>        
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Eggs (dozen)<br></label></th>
-            <th><input type="radio" name="eggs" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="eggs" value="0.5" > 0.5<br></th>
-            <th><input type="radio"  name="eggs" value="1" > 1<br></th>
-            <th><input type="radio"  name="eggs" value="1.5" > 1.5<br></th>
-            <th><input type="radio"  name="eggs" value="2" > 2<br></th>
-            <th><input type="radio"  name="eggs" value="2.5" > 2.5<br></th>
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Butter<br></label></th>
-            <th><input type="radio" name="butt" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="butt" value="1" > 1<br></th>
-            <th><input type="radio"  name="butt" value="2" > 2<br></th>
-            <th><input type="radio"  name="butt" value="3" > 3<br></th>
-            <th><input type="radio"  name="butt" value="4" > 4<br></th>
-            <th><input type="radio"  name="butt" value="5" > 5<br></th>
-          </tr>
-          
-          <!-- <tr> 
-            <th width="50%" align="left"><label>Cheese Sticks<br></label></th>
-            <th><input type="radio" name="cheese" checked> 0<br></th>
-            <th><input type="radio"  name="cheese"> 4<br></th>
-            <th><input type="radio"  name="cheese"> 4<br></th>
-            <th><input type="radio"  name="cheese"> 4<br></th>
-            <th><input type="radio"  name="cheese"> 8<br></th>
-            <th><input type="radio"  name="cheese"> 8<br></th>
-          </tr> -->
-          
-          
-          
-          
-          <tr> 
-            <th colspan="7"><label>Frozen Foods<br></label></th>        
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Ground Beef (one pound)<br></label></th>
-            <th><input type="radio" name="beef" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="beef" value="0.5" > 0.5<br></th>
-            <th><input type="radio"  name="beef" value="1" > 1<br></th>
-            <th><input type="radio"  name="beef" value="1.5" > 1.5<br></th>
-            <th><input type="radio"  name="beef" value="2" > 2<br></th>
-            <th><input type="radio"  name="beef" value="2.5" > 2.5<br></th>
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Chicken (1.4-1.8 pounds, whole)<br></label></th>
-            <th><input type="radio" name="chicken" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="chicken" value="0.5" > 0.5<br></th>
-            <th><input type="radio"  name="chicken" value="1" > 1<br></th>
-            <th><input type="radio"  name="chicken" value="1.5" > 1.5<br></th>
-            <th><input type="radio"  name="chicken" value="2" > 2<br></th>
-            <th><input type="radio"  name="chicken" value="2.5" > 2.5<br></th>
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Frozen Vegetables (corn/broccoli/peas/mixed)<br></label></th>
-            <th><input type="radio" name="frovege" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="frovege" value="1" > 1<br></th>
-            <th><input type="radio"  name="frovege" value="2" > 2<br></th>
-            <th><input type="radio"  name="frovege" value="3" > 3<br></th>
-            <th><input type="radio"  name="frovege" value="4" > 4<br></th>
-            <th><input type="radio"  name="frovege" value="5" > 5<br></th>
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Bread Loaf (brown/white)<br></label></th>
-            <th><input type="radio" name="bread" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="bread" value="1" > 1<br></th>
-            <th><input type="radio"  name="bread" value="2" > 2<br></th>
-            <th><input type="radio"  name="bread" value="2" > 2<br></th>
-            <th><input type="radio"  name="bread" value="4" > 4<br></th>
-            <th><input type="radio"  name="bread" value="5" > 5<br></th>
-          </tr>
-          
-          
-          
-          <!-- <tr> 
-            <th colspan="7"><label>Non - Dairy Beverages<br></label></th>        
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Juice - 1 litre (apple/orange/other)<br></label></th>
-            <th><input type="radio" name="juice" checked> 0<br></th>
-            <th><input type="radio"  name="juice"> 1<br></th>
-            <th><input type="radio"  name="juice"> 2<br></th>
-            <th><input type="radio"  name="juice"> 3<br></th>
-            <th><input type="radio"  name="juice"> 4<br></th>
-            <th><input type="radio"  name="juice"> 7<br></th>
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Soy beverage - 1 litre<br></label></th>
-            <th><input type="radio" name="soy" checked> 0<br></th>
-            <th><input type="radio"  name="soy"> 1<br></th>
-            <th><input type="radio"  name="soy"> 1<br></th>
-            <th><input type="radio"  name="soy"> 2<br></th>
-            <th><input type="radio"  name="soy"> 2<br></th>
-            <th><input type="radio"  name="soy"> 3<br></th>
-          </tr> -->
-          
-          
-          <tr> 
-            <th colspan="7"><label>Canned Goods<br></label></th>        
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Vegetables (corn/peas/carrots/mixed veggies/other)<br></label></th>
-            <th><input type="radio" name="vege" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="vege" value="1" > 1<br></th>
-            <th><input type="radio"  name="vege" value="2" > 2<br></th>
-            <th><input type="radio"  name="vege" value="3" > 3<br></th>
-            <th><input type="radio"  name="vege" value="4" > 4<br></th>
-            <th><input type="radio"  name="vege" value="5" > 5<br></th>
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Fruit (peaches/pineapple/fruit cocktail/other)<br></label></th>
-            <th><input type="radio" name="fruit" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="fruit" value="1" > 1<br></th>
-            <th><input type="radio"  name="fruit" value="2" > 2<br></th>
-            <th><input type="radio"  name="fruit" value="3" > 3<br></th>
-            <th><input type="radio"  name="fruit" value="4" > 4<br></th>
-            <th><input type="radio"  name="fruit" value="5" > 5<br></th>
-          </tr>
-          
-          <!-- <tr> 
-            <th width="50%" align="left"><label>Pasta Sauce/Tomato Sauce/Tomato Paste<br></label></th>
-            <th><input type="radio" name="sauces" checked> 0<br></th>
-            <th><input type="radio"  name="sauces"> 1<br></th>
-            <th><input type="radio"  name="sauces"> 2<br></th>
-            <th><input type="radio"  name="sauces"> 3<br></th>
-            <th><input type="radio"  name="sauces"> 4<br></th>
-            <th><input type="radio"  name="sauces"> 5<br></th>
-          </tr> -->
-          
-          <!-- <tr> 
-            <th width="50%" align="left"><label>Canned Tomatoes<br></label></th>
-            <th><input type="radio" name="ctomatoes" checked> 0<br></th>
-            <th><input type="radio"  name="ctomatoes"> 1<br></th>
-            <th><input type="radio"  name="ctomatoes"> 2<br></th>
-            <th><input type="radio"  name="ctomatoes"> 2<br></th>
-            <th><input type="radio"  name="ctomatoes"> 3<br></th>
-            <th><input type="radio"  name="ctomatoes"> 4<br></th>
-          </tr> -->
-          
-          <tr> 
-            <th width="50%" align="left"><label>Soup (tomato/mushroom/chicken/chunky/veg/other)<br></label></th>
-            <th><input type="radio" name="soup" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="soup" value="1" > 1<br></th>
-            <th><input type="radio"  name="soup" value="2" > 2<br></th>
-            <th><input type="radio"  name="soup" value="3" > 3<br></th>
-            <th><input type="radio"  name="soup" value="4" > 4<br></th>
-            <th><input type="radio"  name="soup" value="5" > 5<br></th>
-          </tr>
-          
-          <!-- <tr> 
-            <th width="50%" align="left"><label>Baked Brown Beans (with/without pork)<br></label></th>
-            <th><input type="radio" name="bbbeans" checked> 0<br></th>
-            <th><input type="radio"  name="bbbeans"> 1<br></th>
-            <th><input type="radio"  name="bbbeans"> 2<br></th>
-            <th><input type="radio"  name="bbbeans"> 3<br></th>
-            <th><input type="radio"  name="bbbeans"> 3<br></th>
-            <th><input type="radio"  name="bbbeans"> 4<br></th>
-          </tr> -->
-          
-          <!-- <tr> 
-            <th width="50%" align="left"><label>Canned Beans (chickpeas/kidney/mixed/other)<br></label></th>
-            <th><input type="radio" name="cbeans" checked> 0<br></th>
-            <th><input type="radio"  name="cbeans"> 1<br></th>
-            <th><input type="radio"  name="cbeans"> 2<br></th>
-            <th><input type="radio"  name="cbeans"> 3<br></th>
-            <th><input type="radio"  name="cbeans"> 4<br></th>
-            <th><input type="radio"  name="cbeans"> 5<br></th>
-          </tr> -->
-          
-          <tr> 
-            <th width="50%" align="left"><label>Canned Seafood (salmon/tuna/sardines/other)<br></label></th>
-            <th><input type="radio" name="cseafood" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="cseafood" value="1" > 1<br></th>
-            <th><input type="radio"  name="cseafood" value="2" > 2<br></th>
-            <th><input type="radio"  name="cseafood" value="3" > 3<br></th>
-            <th><input type="radio"  name="cseafood" value="4" > 4<br></th>
-            <th><input type="radio"  name="cseafood" value="5" > 5<br></th>
-          </tr>
-          
-          <tr> 
-            <th width="50%" align="left"><label>Canned Meat (chicken/turkey/ham/other)<br></label></th>
-            <th><input type="radio" name="cmeat" value="0"  checked> 0<br></th>
-            <th><input type="radio"  name="cmeat" value="1" > 1<br></th>
-            <th><input type="radio"  name="cmeat" value="1" > 1<br></th>
-            <th><input type="radio"  name="cmeat" value="2" > 2<br></th>
-            <th><input type="radio"  name="cmeat" value="3" > 3<br></th>
-            <th><input type="radio"  name="cmeat" value="4" > 4<br></th>
-          </tr>
-          
-          <!-- <tr> 
-            <th width="50%" align="left"><label>Canned Meal (pasta/chili/other)<br></label></th>
-            <th><input type="radio" name="cmeal" checked> 0<br></th>
-            <th><input type="radio"  name="cmeal"> 1<br></th>
-            <th><input type="radio"  name="cmeal"> 1<br></th>
-            <th><input type="radio"  name="cmeal"> 2<br></th>
-            <th><input type="radio"  name="cmeal"> 2<br></th>
-            <th><input type="radio"  name="cmeal"> 3<br></th>
-          </tr> -->
-          
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %} 
+        </p>
+
+        <label>Enter the number of fresh fruits<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="freshfruit" min=0>
         
-        </tbody>
-      </table>
-	  
-	  
-	  <!-- <label><br>ID<br></label>
-      <input style="width: 100%; padding: 10px" type="text" placeholder="30044533" name="id" required>
-	   -->
+        <label><br>Enter the number of whole vegetables (carrots, tomatoes, etc)<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="carrot" min=0>
+        
+        <label><br>Enter the number of bags of potatoes<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="potato" min=0>
+        
+        <label><br>Enter the number of cartons of eggs<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="eggs" min=0>
+        
+        <label><br>Enter the number of sticks of butter<br></label>
+        <input style="width: 100%; padding: 10px" type="number" `="0" name="butt" min=0>
 
-      <label><br>Pick Up Date and Time<br></label>
-     <input style="width: 100%; padding: 10px" type="datetime-local" name="time" required>
+        <label><br>Enter the pounds of ground beef<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="beef" min=0>
 
-      <br><br>
+        <label><br>Enter the number of whole chickens<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="chicken" min=0>
+
+        <label><br>Enter the pounds of frozen vegetables (peas, corn, etc)<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="frovege" min=0>
+
+        <label><br>Enter the loaves of bread<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="bread" min=0>
+
+        <label><br>Enter the number of canned vegetables<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="vege" min=0>
+
+        <label><br>Enter the number of canned fruits<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="fruit" min=0>
+
+        <label><br>Enter the number of canned soup<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="soup" min=0>
+
+        <label><br>Enter the number of canned seafood<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="cseafood" min=0>
+
+        <label><br>Enter the number of canned meats<br></label>
+        <input style="width: 100%; padding: 10px" type="number" value="0" name="cmeat" min=0>
+        
+        <label><br>Enter a possible date and time for pickup<br></label>
+        <input style="width: 100%; padding: 10px" type="datetime-local" name="date" required>
+
+        <br><br>
       <button style="width: 100%; padding: 10px" type="submit">Submit</button>
       
       </form>

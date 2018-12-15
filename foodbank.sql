@@ -75,6 +75,8 @@ CREATE TABLE Foodbank(
     funds           INTEGER NOT NULL
 );
 
+INSERT INTO Foodbank (address, phonenumber, email, hours, funds) VALUES ("251 MacEwan Student Centre 2500 University Drive NW Calgary", 4032206551, "foodbank@ucalgary.ca", "WEEKDAYS 0900-1700", 0);
+
 
 CREATE TABLE MaxRequests(
     famSize         INTEGER PRIMARY KEY UNIQUE,
@@ -117,6 +119,7 @@ CREATE TABLE RequestForm(
     cannedMeat      INTEGER NOT NULL,
     clientid        INTEGER NOT NULL,
     volunteerid     INTEGER,
+    date		    TEXT NOT NULL,
     FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -159,12 +162,6 @@ CREATE TABLE Donates(
     FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
--- CREATE TABLE Prepares(
---     volunteerid     INTEGER NOT NULL,
---     foodbarcode     INTEGER NOT NULL
---     -- FOREIGN KEY(volunteerid) REFERENCES Volunteer(id) ON UPDATE CASCADE,
---     -- FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE
--- );
 
 CREATE TABLE Takes(
     clientid        INTEGER NOT NULL,
@@ -179,8 +176,15 @@ CREATE TABLE Foodstore(
     refcode     INTEGER NOT NULL,
     foodname    TEXT NOT NULL,
     quantity    INTEGER NOT NULL,
-    expirydate        TEXT NOT NULL,
+    expirydate  TEXT NOT NULL,
     address     TEXT NOT NULL,
     PRIMARY KEY(refcode),
     FOREIGN KEY(address) REFERENCES Foodbank(address) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+INSERT INTO Account(name, email, username, password, accounttype) VALUES ("Administrator One", "csus@ucalgary.ca", "csus", "cpsc2018", 2);
+INSERT INTO Admin (phonenumber, accountid) VALUES (4031111111,1);
+
+INSERT INTO Account(name, email, username, password, accounttype) VALUES ("Rahmanta Nadhif", "ceo@nadramon.com", "nadramon", "0123", 0);
+INSERT INTO Client (income, accountid) VALUES (350,2)
+

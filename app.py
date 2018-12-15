@@ -6,7 +6,7 @@ import datetime
 app = Flask(__name__)
 
 currentUser = 0
-currentId=0
+currentId=2
 #where 1 = client, 2 = user, 3 = admin
 
 
@@ -49,14 +49,27 @@ def signup():
 @app.route('/reqform')
 def reqform():
 
-	return render_template('reqform.html')
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	t = (currentId)
+	temp = (t,)
+	cursor = c.execute("SELECT * FROM Dependant WHERE clientid=?",temp)
+	famSize = len(cursor.fetchall())
+	t=(famSize)
+	temp = (t,)
+	c.execute("SELECT * FROM MaxRequests WHERE famSize=?",temp)
+
+	results = c.fetchall()
+
+	return render_template('reqform.html', data=results)
 
 @app.route('/loginAccount', methods=['POST'])
 def loginAccount():
 	# open connection
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
-
+	error=None
 	# c.execute(
 	# 	"INSERT INTO Client (name, email, username, password, income) VALUES ('{name}','{email}','{username}', '{password}', '{income}')".format(
 	# 		name=request.form['name'],
@@ -118,7 +131,6 @@ def loginAccount():
 	return redirect('/login')
 
 
-
 @app.route('/addreqform', methods=['POST'])
 def addreqform():
 	error=None
@@ -130,43 +142,50 @@ def addreqform():
 
 		t = (currentId)
 		temp = (t,)
-		famSize = c.execute("SELECT count(*) FROM Dependant WHERE clientid=?",temp)
+		cursor = c.execute("SELECT * FROM Dependant WHERE clientid=?",temp)
+		famSize = len(cursor.fetchall())
 
+		t = (request.form['date'])
+		date_time_obj = datetime.datetime.strptime(t, '%Y-%m-%dT%H:%M')
+		current = datetime.datetime.now()+datetime.timedelta(days=1)
 
-
-		c.execute(
-			"INSERT INTO RequestForm (fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}' )".format(
-				fruits=request.form['freshfruit'],
-				vegetables=request.form['carrot'],
-				potatoBags=request.form['potato'],
-				eggs=request.form['eggs'],
-				butter=request.form['butt'],
-				groundBeef=request.form['beef'],
-				wholeChicken=request.form['chicken'],
-				veggieFrozen=request.form['frovege'],
-				bread=request.form['bread'],
-				cannedVeggie=request.form['vege'],
-				cannedFruit=request.form['fruit'],
-				cannedSoup=request.form['soup'],
-				cannedSeafood=request.form['cseafood'],
-				cannedMeat=request.form['cmeat'],
-				clientid=currentId))
-
+		if (date_time_obj>current):
+			c.execute(
+				"INSERT INTO RequestForm (fruits, vegetables, potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid, date) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}' , '{date}')".format(
+					fruits=request.form['freshfruit'],
+					vegetables=request.form['carrot'],
+					potatoBags=request.form['potato'],
+					eggs=request.form['eggs'],
+					butter=request.form['butt'],
+					groundBeef=request.form['beef'],
+					wholeChicken=request.form['chicken'],
+					veggieFrozen=request.form['frovege'],
+					bread=request.form['bread'],
+					cannedVeggie=request.form['vege'],
+					cannedFruit=request.form['fruit'],
+					cannedSoup=request.form['soup'],
+					cannedSeafood=request.form['cseafood'],
+					cannedMeat=request.form['cmeat'],
+					clientid=currentId,
+					date=request.form['date']))
+		else:
+			error = "Invalid date and time, please pick a future date and time."
 		conn.commit()
 		conn.close()
 	else:
 		error = "You must be logged in as a client to access this page"
-	return render_template('index.html',error=error)
+	return render_template('reqform.html',error=error)
 
 @app.route('/addAppointmentData', methods=['POST'])
 def addAppointmentData():
+	error = None
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 	volunteerExists = False
 	clientExists=False
 	t = (request.form['vID'])
 	temp = (t,)
-	for row in c.execute("SELECT * FROM Account WHERE id=?",temp):
+	for row in c.execute("SELECT * FROM Volunteer WHERE accountid=?",temp):
 		volunteerExists=True
 		break
 	else:
@@ -174,7 +193,7 @@ def addAppointmentData():
 
 	t = (request.form['cID'])
 	temp = (t,)
-	for row in c.execute("SELECT * FROM Account WHERE id=?",temp):
+	for row in c.execute("SELECT * FROM Client WHERE accountid=?",temp):
 		clientExists=True
 		break
 	else:
@@ -185,42 +204,34 @@ def addAppointmentData():
 	#https://stackabuse.com/converting-strings-to-datetime-in-python/
 	date_time_obj = datetime.datetime.strptime(t, '%Y-%m-%dT%H:%M')
 	current = datetime.datetime.now()+datetime.timedelta(days=1)
-	#print(current)
-	#print(date_time_obj < current)
-	#print("above is bool")
 
 	#ensure that appointment times are at least 1 day away
-	if (date_time_obj<current):
+	if (date_time_obj>current):
 		if (volunteerExists and clientExists):
 			c.execute(
 				"INSERT INTO Appointment (time, clientid, volunteerid ) VALUES ('{time}', '{clientid}','{volunteerid}')".format(
 					time=request.form['time'],
 					clientid=request.form['cID'],
 					volunteerid=request.form['vID']))
+		else:
+			error = "The requested Volunteer ID or Client ID does not exist."
+	else:
+		error = "Invalid date and time, please pick a future date and time."
 	conn.commit()
 	conn.close()
-	return redirect('/')
+	return render_template('addAppointment.html',error=error)
 
 @app.route('/addInventoryData', methods=['POST'])
 def addInventoryData():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 	c.execute(
-		"INSERT INTO Foodstore (fruits, vegetables,  potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}' )".format(
-			fruits=request.form['freshfruit'],
-			vegetables=request.form['carrot'],
-			potatoBags=request.form['potato'],
-			eggs=request.form['eggs'],
-			butter=request.form['butt'],
-			groundBeef=request.form['beef'],
-			wholeChicken=request.form['chicken'],
-			veggieFrozen=request.form['frovege'],
-			bread=request.form['bread'],
-			cannedVeggie=request.form['vege'],
-			cannedFruit=request.form['fruit'],
-			cannedSoup=request.form['soup'],
-			cannedSeafood=request.form['cseafood'],
-			cannedMeat=request.form['cmeat']))
+		"INSERT INTO Foodstore (refcode, foodname, quantity, expirydate, address) VALUES ('{refcode}','{foodname}','{quantity}', '{expirydate}', '{address}')".format(
+			refcode=request.form['refcode'],
+			foodname=request.form['foodname'],
+			quantity=request.form['quantity'],
+			expirydate=request.form['expirydate'],
+			address=request.form['address']))
 
 	conn.commit()
 	conn.close()
@@ -323,8 +334,6 @@ def addVolunteerUser():
 	else:
 		print("not found")
 
-
-	
 	conn.commit()
 	conn.close()
 	return redirect('/admin')
@@ -342,7 +351,7 @@ def addDonor():
 	return render_template('addDonor.html')
 
 #done
-@app.route('/addDonorData')
+@app.route('/addDonorData', methods=['POST'])
 def addDonorData():
 
 	conn = sqlite3.connect('foodbank.db')
@@ -360,10 +369,39 @@ def addDonorData():
 
 	return redirect('/admin')
 
-@app.route('/addFunds')
-def addFunds():
-	return render_template('addFunds.html')
+@app.route('/addSupplierData', methods=['POST'])
+def addSupplierData():
 
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	c.execute(
+		"INSERT INTO Supplier (name,phonenumber,email) VALUES ('{name}','{phonenumber}','{email}')".format(
+			name=request.form['name'],
+			phonenumber=request.form['phonenumber'],
+			email=request.form['email']))
+	
+	conn.commit()
+	conn.close()
+
+
+	return redirect('/admin')
+
+@app.route('/updateFundsData', methods=['POST'])
+def updateFundsData():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	address = "251 MacEwan Student Centre 2500 University Drive NW Calgary"
+	c.execute("UPDATE Foodbank SET funds = ? WHERE address = ?", (request.form['funds'],address))
+	
+	conn.commit()
+	conn.close()
+	return redirect('/admin')
+
+@app.route('/updateFunds')
+def updateFunds():
+	return render_template('updateFunds.html')
 
 @app.route('/addInventory')
 def addInventory():
@@ -372,6 +410,7 @@ def addInventory():
 @app.route('/addSupplier')
 def addSupplier():
 	return render_template('addSupplier.html')
+
 
 @app.route('/addVolunteer')
 def addVolunteer():
@@ -411,20 +450,17 @@ def editAdminUser():
 	c.execute("SELECT * FROM Admin WHERE id=?", (request.form['id']))
 	results = c.fetchone()
 	if results is not None:
-                if request.form['name'] != "":
-                        newName = request.form['name']
-                else:
-                        c.execute("SELECT name FROM Admin WHERE id=?", (request.form['id']))
-                        newName = c.fetchone()[0]
-                        
-                if request.form['phone'] != "":
-                        newPhone = request.form['phone']
-                else:
-                        c.execute("SELECT phonenumber FROM Admin WHERE id=?", (request.form['id']))
-                        newPhone = c.fetchone()[0]
-
-        
-
+				if request.form['name'] != "":
+						newName = request.form['name']
+				else:
+						c.execute("SELECT name FROM Admin WHERE id=?", (request.form['id']))
+						newName = c.fetchone()[0]
+						
+				if request.form['phone'] != "":
+						newPhone = request.form['phone']
+				else:
+						c.execute("SELECT phonenumber FROM Admin WHERE id=?", (request.form['id']))
+						newPhone = c.fetchone()[0]
 
 	c.execute(
 		"INSERT INTO Admin (name, phonenumber, email, username, password) VALUES ('{name}', '{phonenumber}','{email}','{username}', '{password}')".format(
@@ -458,7 +494,7 @@ def viewVolunteer():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 
-	c.execute("SELECT * FROM Volunteer")
+	c.execute("SELECT * FROM Account INNER JOIN Volunteer ON Account.id=Volunteer.accountid")
 	results = c.fetchall()
 	print(results)
 	return render_template('viewVolunteer.html', data=results)
@@ -521,7 +557,7 @@ def deleteAdminUser():
 	c = conn.cursor()
 	t = (request.form['id'])
 	temp = (t,)
-	c.execute("DELETE FROM Admin WHERE id=?", temp)
+	c.execute("DELETE FROM Account WHERE id=?", temp)
 	
 	conn.commit()
 	conn.close()
@@ -534,7 +570,7 @@ def deleteVolunteerUser():
 	c = conn.cursor()
 	t = (request.form['id'])
 	temp = (t,)
-	c.execute("DELETE FROM Volunteer WHERE id=?", temp)
+	c.execute("DELETE FROM Account WHERE id=?", temp)
 	
 	conn.commit()
 	conn.close()
@@ -610,24 +646,39 @@ def finishOrder():
 
 	return redirect('/')
 
-# @app.route('/editAdmin')
-# def editAdmin():
-# 	return render_template('editAdmin.html')
 
-# @app.route('/editAppointment')
-# def editAppointment():
-# 	return render_template('editAppointment.html')
+@app.route('/viewStats')
+def viewStats():
+	return render_template('viewStats.html')
 
-# @app.route('/editClient')
-# def editClient():
-# 	return render_template('editClient.html')
 
-# @app.route('/editInventory')
-# def editInventory():
-# 	return render_template('editInventory.html')
+@app.route('/genStatsVolunteer',methods=['POST'])
+def genStatsVolunteer():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
 
-# @app.route('/editVolunteer')
-# def editVolunteer():
-# 	return render_template('editVolunteer.html')
+	c.execute("SELECT COUNT(id) FROM Appointment WHERE ? = volunteerid", (request.form['Vid']))
+	results = c.fetchall()
 
+	return render_template('viewStatsVolunteer.html', data = results)
+
+@app.route('/genStatsClient',methods=['POST'])
+def genStatsClient():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	c.execute("SELECT COUNT(id) FROM Appointment WHERE ? IN (SELECT accountid FROM Client)", (request.form['Cid']))
+	results = c.fetchall()
+
+	return render_template('viewStatsClient.html', data = results)
+
+@app.route('/genStatsAllClient',methods=['POST'])
+def genStatsAllClient():
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	c.execute("SELECT COUNT(id) FROM Appointment WHERE clientid IN (SELECT accountid FROM Client WHERE income <= 10000)")
+	results = c.fetchall()
+
+	return render_template('viewStatsAllClient.html', data = results)
 

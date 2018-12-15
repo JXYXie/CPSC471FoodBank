@@ -40,48 +40,21 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
       
       <form action="/addInventoryData" method="post">
       
-        <label>Fruits<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="freshfruit" min="0" required>
+        <label>Enter the bar code<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="1000" name="refcode" min="0" required>
         
-        <label><br>Vegetables<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="carrot" min="0" required>
+        <label><br>Enter the name of the food<br></label>
+        <input style="width: 100%; padding: 10px" type="text" placeholder="Carrots" name="foodname" required>
         
-        <label><br>Potatoes<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="potato" min="0" required>
+        <label><br>Enter the quantity of the food<br></label>
+        <input style="width: 100%; padding: 10px" type="number" placeholder="1" name="quantity" min="0" required>
         
-        <label><br>Eggs (Dozen)<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="eggs" min="0" required>
-        
-        <label><br>Butter<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="butt" min="0" required>
-        
-        <label><br>Groud Beef<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="beef" min="0" required>
-        
-        <label><br>Chicken<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="chicken" min="0" required>
-        
-        <label><br>Frozen Veggies<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="frovege" min="0" required>
-        
-        <label><br>Bread<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="bread" min="0" required>
+        <label><br>Enter the expiry date<br></label>
+        <input style="width: 100%; padding: 10px" type="date" value="0" name="expirydate" required>
 
-        <label><br>Canned Veggies<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="vege" min="0" required>
+        <label><br>Enter the address of the food currently stored at<br></label>
+        <input style="width: 100%; padding: 10px" type="text" value="251 MacEwan Student Centre 2500 University Drive NW Calgary" name="address" required>
 
-        <label><br>Canned Fruits<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="fruit" min="0" required>
-        
-        <label><br>Canned Soup<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="soup" min="0" required>
-        
-        <label><br>Canned Seafoods<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="cseafood" min="0" required>
-        
-        <label><br>Canned Meats<br></label>
-        <input style="width: 100%; padding: 10px" type="number" placeholder="0" name="cmeat" min="0" required>
-        
         <br><br>
       <button style="width: 100%; padding: 10px" type="submit">Submit</button>
       
@@ -93,9 +66,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
     <h1 class="w3-margin w3-xlarge">403-220-6551<br>251 MacEwan Student Centre<br>2500 University Drive NW<br>Canada AB</h1>
 </div>
-
-
-
 
 </body>
 </html>
