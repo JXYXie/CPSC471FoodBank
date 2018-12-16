@@ -5,39 +5,43 @@ import datetime
 
 app = Flask(__name__)
 
-currentUser = 0
-currentId=4
-#where 1 = client, 2 = user, 3 = admin
+currentUser = -1
+currentId=-1
+
+#client = 0, volunter = 1, admin = 2 for accounttype field
 
 
 @app.route('/')
 def hello_world():
+	global currentUser
+	global currentId
+	print("currentUser is "+str(currentUser))
+	print("currentId is "+str(currentId))
 	return render_template('index.html')
 
 @app.route('/admin')
 def admin():
 	global currentUser
-	# if currentUser==3:
-	# 	return render_template('admin.html')
-	# else:
-	# 	return render_template('index.html')
+	global currentId
+	print("currentUser is "+str(currentUser))
+	print("currentId is "+str(currentId))
+	if currentUser>0:
+		return render_template('admin.html')
+	else:
+		return render_template('index.html')
 
-	return render_template('admin.html')
-
-
-#############garbage
-
-@app.route('/loginClient')
-def loginClient():
-	currentUser = 1
-	return render_template('index.html')
-	
-
-###################
 
 @app.route('/login')
 def login():
-	return render_template('login.html')
+	global currentUser
+	global currentId
+
+	if (currentUser==-1):
+		return render_template('login.html')
+	else:
+		currentUser=-1
+		currentId=-1
+		return render_template('index.html')
 
 @app.route('/signup')
 def signup():
@@ -45,6 +49,7 @@ def signup():
 
 @app.route('/reqform')
 def reqform():
+	global currentUser
 
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
@@ -52,158 +57,148 @@ def reqform():
 	c.execute("SELECT * FROM MaxRequests")
 	results = c.fetchall()
 
-	return render_template('reqform.html', data=results)
+	global currentUser
+	print(currentUser)
+	if (currentUser>-1):
+		return render_template('reqform.html',data=results)
+	else:
+		return render_template('index.html')
+
 
 @app.route('/loginAccount', methods=['POST'])
 def loginAccount():
+	global currentUser
+	global currentId
 	# open connection
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
 	error=None
-	# c.execute(
-	# 	"INSERT INTO Client (name, email, username, password, income) VALUES ('{name}','{email}','{username}', '{password}', '{income}')".format(
-	# 		name=request.form['name'],
-	# 		email=request.form['email'],
-	# 		username=request.form['username'],
-	# 		password=request.form['password'],
-	# 		income=request.form['income']))
-	# t=(request.form['name'])
-	# temp = (t,)
-	# c.execute('SELECT * FROM Client WHERE name=?', temp)
-	# key = c.fetchone()[0]
 
 
-	if request.form['user'] == 'client':
-		c.execute("SELECT * FROM Client")
-		results = c.fetchall()
-		print("checking clients")
-		for x in results:
-			if x[3] == request.form['username']:
-				if x[4] == request.form['password']:
-					currentUser = 1
-					conn.commit()
-					conn.close()
-					print(currentUser)
-					return redirect('/')
+	# if request.form['user'] == 'client':
+	# 	c.execute("SELECT * FROM Client")
+	# 	results = c.fetchall()
+	# 	print("checking clients")
+	# 	for x in results:
+	# 		if x[0] == request.form['username']:
+	# 			if x[4] == request.form['password']:
+	# 				currentUser = 1
+	# 				conn.commit()
+	# 				conn.close()
+	# 				print(currentUser)
+	# 				return redirect('/')
 
+#client = 0, volunter = 1, admin = 2 for accounttype field
+#1 = client, 2 = user, 3 = admin for currentuser
 
-	elif request.form['user'] == 'volunteer':
-		c.execute("SELECT * FROM Volunteer")
-		results = c.fetchall()
-
-		for x in results:
-			if x[4] == request.form['username']:
-				if x[5] == request.form['password']:
-					currentUser = 2
-					conn.commit()
-					conn.close()
-					print(currentUser)
-					return redirect('/')
-
-
-	elif request.form['user'] == 'admin':
-		c.execute("SELECT * FROM Admin")
-		results = c.fetchall()
-
-		for x in results:
-			if x[4] == request.form['username']:
-				if x[5] == request.form['password']:
-					currentUser = 3
-					conn.commit()
-					conn.close()
-					print(currentUser)
-					return redirect('/admin')
-
-
+	c.execute("SELECT * FROM Account")
+	results = c.fetchall()
+	for x in results:
+		print(x[3])
+		print(x[4])
+		print(x[5])
+		if x[3] == request.form['username']:
+			print("user matched")
+			if x[4] == request.form['password']:
+				print("password matched")
+				print(request.form['user'])
+				print(x[5])
+				print("above is accounttype")
+				temp = int(request.form['user'])
+				if (x[5] == temp):
+					currentUser=temp
+					currentId=x[0]
 	conn.commit()
 	conn.close()
-	return redirect('/login')
+	print(currentUser)
 
+	if (currentUser==-1):
+		return redirect('/login')
+	elif (currentUser==2):
+		return redirect('/admin')
+	else:
+		return redirect('/')
 
 @app.route('/addreqform', methods=['POST'])
 def addreqform():
 	error=None
-	currentUser=1
-	if(currentUser==1):
+	global currentId
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
 
-		conn = sqlite3.connect('foodbank.db')
-		c = conn.cursor()
+	t = (currentId)
+	temp = (t,)
+	cursor = c.execute("SELECT * FROM Dependant WHERE clientid=?",temp)
+	famSize = len(cursor.fetchall()) + 1
+	print(famSize)
 
-		t = (currentId)
-		temp = (t,)
-		cursor = c.execute("SELECT * FROM Dependant WHERE clientid=?",temp)
-		famSize = len(cursor.fetchall()) + 1
-		print(famSize)
+	t = (famSize)
+	temp = (t,)
+	print(temp)
+	cursor = c.execute("SELECT * FROM MaxRequests WHERE famSize=?",temp)
+	max = cursor.fetchone()
+	print(max)
+	max = list(max)
+	max.pop(0)
 
-		t = (famSize)
-		temp = (t,)
-		print(temp)
-		cursor = c.execute("SELECT * FROM MaxRequests WHERE famSize=?",temp)
-		max = cursor.fetchone()
-		print(max)
-		max = list(max)
-		max.pop(0)
+	a=[]
+	a.append(request.form['freshfruit']),
+	a.append(request.form['carrot']),
+	a.append(request.form['potato']),
+	a.append(request.form['eggs']),
+	a.append(request.form['butt']),
+	a.append(request.form['beef']),
+	a.append(request.form['chicken']),
+	a.append(request.form['frovege']),
+	a.append(request.form['bread']),
+	a.append(request.form['vege']),
+	a.append(request.form['fruit']),
+	a.append(request.form['soup']),
+	a.append(request.form['cseafood']),
+	a.append(request.form['cmeat']),		
+	a=list(map(int,a))
+	print(a)
+	allSmaller = True
+	print(max)
+	for _ in range(len(max)):
+		if (a[_]>max[_]):
+			allSmaller = False
+			break
+	print(allSmaller)
+	t = (request.form['date'])
+	date_time_obj = datetime.datetime.strptime(t, '%Y-%m-%dT%H:%M')
+	current = datetime.datetime.now()+datetime.timedelta(days=1)
 
-		a=[]
-		a.append(request.form['freshfruit']),
-		a.append(request.form['carrot']),
-		a.append(request.form['potato']),
-		a.append(request.form['eggs']),
-		a.append(request.form['butt']),
-		a.append(request.form['beef']),
-		a.append(request.form['chicken']),
-		a.append(request.form['frovege']),
-		a.append(request.form['bread']),
-		a.append(request.form['vege']),
-		a.append(request.form['fruit']),
-		a.append(request.form['soup']),
-		a.append(request.form['cseafood']),
-		a.append(request.form['cmeat']),		
-		a=list(map(int,a))
-		print(a)
-		allSmaller = True
-		print(max)
-		for _ in range(len(max)):
-			if (a[_]>max[_]):
-				allSmaller = False
-				break
-		print(allSmaller)
-		t = (request.form['date'])
-		date_time_obj = datetime.datetime.strptime(t, '%Y-%m-%dT%H:%M')
-		current = datetime.datetime.now()+datetime.timedelta(days=1)
+	c.execute("SELECT * FROM MaxRequests")
+	results = c.fetchall()
 
-		c.execute("SELECT * FROM MaxRequests")
-		results = c.fetchall()
-
-		if (date_time_obj>current):
-			print("OuterIf")
-			if (allSmaller):
-				c.execute(
-					"INSERT INTO RequestForm (fruits, vegetables, potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid, date) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}' , '{date}')".format(
-						fruits=request.form['freshfruit'],
-						vegetables=request.form['carrot'],
-						potatoBags=request.form['potato'],
-						eggs=request.form['eggs'],
-						butter=request.form['butt'],
-						groundBeef=request.form['beef'],
-						wholeChicken=request.form['chicken'],
-						veggieFrozen=request.form['frovege'],
-						bread=request.form['bread'],
-						cannedVeggie=request.form['vege'],
-						cannedFruit=request.form['fruit'],
-						cannedSoup=request.form['soup'],
-						cannedSeafood=request.form['cseafood'],
-						cannedMeat=request.form['cmeat'],
-						clientid=currentId,
-						date=request.form['date']))
-			else:
-				error = "Too much food requested for the client's current family size"
+	if (date_time_obj>current):
+		print("OuterIf")
+		if (allSmaller):
+			c.execute(
+				"INSERT INTO RequestForm (fruits, vegetables, potatoBags, eggs, butter, groundBeef, wholeChicken, veggieFrozen, bread, cannedVeggie, cannedFruit, cannedSoup, cannedSeafood, cannedMeat, clientid, date) VALUES ('{fruits}','{vegetables}','{potatoBags}', '{eggs}','{butter}', '{groundBeef}', '{wholeChicken}', '{veggieFrozen}', '{bread}', '{cannedVeggie}', '{cannedFruit}', '{cannedSoup}', '{cannedSeafood}', '{cannedMeat}', '{clientid}' , '{date}')".format(
+					fruits=request.form['freshfruit'],
+					vegetables=request.form['carrot'],
+					potatoBags=request.form['potato'],
+					eggs=request.form['eggs'],
+					butter=request.form['butt'],
+					groundBeef=request.form['beef'],
+					wholeChicken=request.form['chicken'],
+					veggieFrozen=request.form['frovege'],
+					bread=request.form['bread'],
+					cannedVeggie=request.form['vege'],
+					cannedFruit=request.form['fruit'],
+					cannedSoup=request.form['soup'],
+					cannedSeafood=request.form['cseafood'],
+					cannedMeat=request.form['cmeat'],
+					clientid=currentId,
+					date=request.form['date']))
 		else:
-			error = "Invalid date and time, please pick a future date and time."
-		conn.commit()
-		conn.close()
+			error = "Too much food requested for the client's current family size"
 	else:
-		error = "You must be logged in as a client to access this page"
+		error = "Invalid date and time, please pick a future date and time."
+	conn.commit()
+	conn.close()
 	return render_template('reqform.html',error=error,data=results)
 
 @app.route('/addAppointmentData', methods=['POST'])
@@ -370,7 +365,11 @@ def addVolunteerUser():
 
 @app.route('/addAdmin')
 def addAdmin():
-	return render_template('addAdmin.html')
+	global currentUser
+	if (currentUser==2):
+		return render_template('addAdmin.html')
+	else:
+		return render_template('admin.html')
 
 @app.route('/addAppointment')
 def addAppointment():
@@ -378,7 +377,11 @@ def addAppointment():
 
 @app.route('/addDonor')
 def addDonor():
-	return render_template('addDonor.html')
+	global currentUser
+	if (currentUser==2):
+		return render_template('addDonor.html')
+	else:
+		return render_template('admin.html')
 
 #done
 @app.route('/addDonorData', methods=['POST'])
@@ -431,15 +434,32 @@ def updateFundsData():
 
 @app.route('/updateFunds')
 def updateFunds():
-	return render_template('updateFunds.html')
+
+
+	global currentUser
+	if (currentUser==2):
+		return render_template('updateFunds.html')
+	else:
+		return render_template('admin.html')
 
 @app.route('/addInventory')
 def addInventory():
-	return render_template('addInventory.html')
+
+	global currentUser
+	if (currentUser==2):
+		return render_template('addInventory.html')
+	else:
+		return render_template('admin.html')
 
 @app.route('/addSupplier')
 def addSupplier():
-	return render_template('addSupplier.html')
+
+	global currentUser
+	if (currentUser==2):
+		return render_template('addSupplier.html')
+	else:
+		return render_template('admin.html')
+
 
 
 @app.route('/addVolunteer')
@@ -479,7 +499,13 @@ def viewAdmin():
 	results = c.fetchall()
 	print(results)
 
-	return render_template('viewAdmin.html', data=results)
+	global currentUser
+	if (currentUser==2):
+		return render_template('viewAdmin.html', data=results)
+	else:
+		return render_template('admin.html')
+
+	
 	
 
 @app.route('/viewVolunteer')
@@ -491,7 +517,12 @@ def viewVolunteer():
 	c.execute("SELECT * FROM Account INNER JOIN Volunteer ON Account.id=Volunteer.accountid")
 	results = c.fetchall()
 	print(results)
-	return render_template('viewVolunteer.html', data=results)
+
+	global currentUser
+	if (currentUser==2):
+		return render_template('viewVolunteer.html', data=results)
+	else:
+		return render_template('admin.html')
 
 #done
 @app.route('/viewClient')
@@ -503,6 +534,9 @@ def viewClient():
 	c.execute("SELECT * FROM Account INNER JOIN Client ON Account.id=Client.accountid")
 	results = c.fetchall()
 	print(results)
+	global currentUser
+
+
 	return render_template('viewClient.html', data=results)
 
 @app.route('/viewAppointment')
@@ -514,6 +548,8 @@ def viewAppointment():
 	c.execute("SELECT * FROM Appointment")
 	results = c.fetchall()
 	print(results)
+
+
 	return render_template('viewAppointment.html', data=results)
 
 @app.route('/viewInventory')
@@ -526,7 +562,12 @@ def viewInventory():
 	results = c.fetchall()
 	print(results)
 
-	return render_template('viewInventory.html', data=results)
+	global currentUser
+	if (currentUser==2):
+		return render_template('viewInventory.html',data=results)
+	else:
+		return render_template('admin.html')
+
 
 @app.route('/viewOrder')
 def viewOrder():
@@ -539,10 +580,11 @@ def viewOrder():
 	c.execute("SELECT * FROM RequestForm")
 	results = c.fetchall()
 	print(results)
-
-	return render_template('viewOrder.html', data=results)
-	#else:
-	#	return redirect('/')
+	global currentUser
+	if (currentUser>0):
+		return render_template('viewOrder.html', data=results)
+	else:
+		return redirect('/')
 
 
 @app.route('/deleteAdminUser',methods=['POST'])
@@ -605,15 +647,25 @@ def deleteAppointmentData():
 	
 	conn.commit()
 	conn.close()
-	return redirect('/viewAppointment')
+	return redirect('/viewAdmin')
 
 @app.route('/deleteAdmin')
 def deleteAdmin():
-	return render_template('deleteAdmin.html')
+
+	global currentUser
+	if (currentUser==2):
+		return render_template('deleteAdmin.html')
+	else:
+		return render_template('admin.html')
 
 @app.route('/deleteVolunteer')
 def deleteVolunteer():
-	return render_template('deleteVolunteer.html')
+
+	global currentUser
+	if (currentUser==2):
+		return render_template('deleteVolunteer.html')
+	else:
+		return render_template('admin.html')
 
 @app.route('/deleteClient')
 def deleteClient():
@@ -636,16 +688,90 @@ def finishOrderPage():
 	return render_template('finishOrderPage.html')
 
 
-@app.route('/finishOrder',methods=['POST'])
+
+@app.route('/finishOrder', methods=['POST'])
 def finishOrder():
+	global currentId
+	conn = sqlite3.connect('foodbank.db')
+	c = conn.cursor()
+
+	t = (request.form['id'])
+	temp = (t,)
+	cursor=c.execute("SELECT clientid FROM RequestForm WHERE id=?", temp)
+	clientid = cursor.fetchone()
+	volunid = currentId
+
+	print(volunid)
+	print("volun id above")
+	print(clientid[0])
+	print("clientid above")
+	c.execute("UPDATE RequestForm SET volunteerid = ? WHERE id = ?",(volunid,request.form['id']))
+
+	#c.execute("UPDATE Foodbank SET funds = ? WHERE address = ?", (request.form['funds'],address))
 
 
-	return redirect('/')
 
+	t = (request.form['id'])
+	temp = (t,)
+	cursor = c.execute("SELECT * FROM RequestForm WHERE id=?",temp)
+	requested = cursor.fetchone()
+	requested = list(requested)
+	requested.pop(0)
+	# requested = requested[:-1]
+	# requested = requested[:-1]
+	requested = requested[:len(requested)-3]
 
+	
+
+	cursor = c.execute("SELECT quantity FROM Foodstore")
+	currentstored = cursor.fetchall()
+	currentstored = list(currentstored)
+	print(currentstored)
+	print("above is foodstored")
+	storedformated = []
+	for _ in currentstored:
+		storedformated.append(_[0])
+	
+	# cursor = c.execute("SELECT foodname FROM Foodstore")
+	# names = cursor.fetchall()
+	# names = list(names)
+	# print(names)
+
+	print(requested)
+	print(len(requested))
+	print(storedformated)
+	print(len(storedformated))
+
+	allSmaller = True
+	for _ in range(len(requested)):
+		if (requested[_]>storedformated[_]):
+			allSmaller = False
+			break
+	foodindex = 1
+	if (allSmaller):
+		for _ in requested:
+			c.execute(
+				"INSERT INTO Takes (clientid,foodbarcode,quantity) VALUES ('{clientid}','{foodbarcode}','{quantity}')".format(
+					clientid=clientid[0],
+					foodbarcode=foodindex,
+					quantity=_))
+			c.execute("UPDATE Foodstore SET quantity = quantity-? WHERE refcode = ?", (_,foodindex))
+			foodindex+=1
+
+	conn.commit()
+	conn.close()
+	return redirect('/viewAdmin')
+
+					
 @app.route('/viewStats')
 def viewStats():
-	return render_template('viewStats.html')
+
+	global currentUser
+	if (currentUser==2):
+		return render_template('viewStats.html')
+	else:
+		return render_template('admin.html')
+
 
 
 @app.route('/genStatsVolunteer',methods=['POST'])

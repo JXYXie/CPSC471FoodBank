@@ -194,3 +194,23 @@ INSERT INTO Dependant (clientid,name,relationship) VALUES (2, "Alfath Zakir", "H
 INSERT INTO Account(name, email, username, password, accounttype) VALUES ("Shayne Mujuru", "shayne@ucalgary.ca", "east", "111111", 1);
 INSERT INTO Volunteer (phonenumber,availability, accountid,managerid) VALUES (4032141115,"Monday Tuesday Wednesday Thursday Friday",3,1);
 
+INSERT INTO Account(name, email, username, password, accounttype) VALUES ("tester", "test@ucalgary.ca", "hello", "there", 0);
+INSERT INTO Client (income, accountid) VALUES (500,4);
+
+
+
+
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (1,'fruit',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (2,'carrot',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (3,'potatobag',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (4,'eggDozen',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (5,'butter',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (6,'groundBeef',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (7,'chicken',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (8,'frozenVeg',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (9,'bread',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (10,'cannedVeg',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (11,'cannedFruit',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (12,'cannedSoup',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (13,'cannedSeafood',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
+INSERT INTO Foodstore(refcode,foodname,quantity,expirydate,address) VALUES (14,'cannedMeat',200,"10-20-2019","251 MacEwan Student Centre 2500 University Drive NW Calgary");
