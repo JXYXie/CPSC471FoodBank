@@ -5,7 +5,7 @@ CREATE TABLE Account(
 	id				INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
 	name			TEXT NOT NULL,
 	email			TEXT NOT NULL,
-	username		TEXT NOT NULL,
+	username		TEXT NOT NULL UNIQUE,
 	password		TEXT NOT NULL,
 	accounttype		INTEGER NOT NULL
 );

@@ -268,6 +268,17 @@ def addInventoryData():
 def addClientUser():
 	conn = sqlite3.connect('foodbank.db')
 	c = conn.cursor()
+	error=None
+	c.execute("SELECT username FROM Account")
+	results = c.fetchall()
+	resultsformat = []
+	for _ in results:
+		resultsformat.append(_[0])
+	print(resultsformat)
+	print(request.form['username'] in resultsformat)
+	if request.form['username'] in resultsformat:
+		error="username exists please use a different username"
+		return render_template('signup.html',error=error)
 
 
 	c.execute(
