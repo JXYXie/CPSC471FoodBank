@@ -165,10 +165,10 @@ CREATE TABLE Donates(
 
 
 CREATE TABLE Takes(
+    transactid      INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
     clientid        INTEGER NOT NULL,
     foodbarcode     INTEGER NOT NULL,
     quantity        INTEGER NOT NULL,
-    PRIMARY KEY(clientid, foodbarcode),
     FOREIGN KEY(clientid) REFERENCES Client(accountid) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(foodbarcode) REFERENCES Food(barcode) ON UPDATE CASCADE ON DELETE CASCADE
 );

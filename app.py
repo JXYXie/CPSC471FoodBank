@@ -707,18 +707,12 @@ def finishOrder():
 	print("clientid above")
 	c.execute("UPDATE RequestForm SET volunteerid = ? WHERE id = ?",(volunid,request.form['id']))
 
-	#c.execute("UPDATE Foodbank SET funds = ? WHERE address = ?", (request.form['funds'],address))
-
-
-
 	t = (request.form['id'])
 	temp = (t,)
 	cursor = c.execute("SELECT * FROM RequestForm WHERE id=?",temp)
 	requested = cursor.fetchone()
 	requested = list(requested)
 	requested.pop(0)
-	# requested = requested[:-1]
-	# requested = requested[:-1]
 	requested = requested[:len(requested)-3]
 
 	
@@ -731,11 +725,7 @@ def finishOrder():
 	storedformated = []
 	for _ in currentstored:
 		storedformated.append(_[0])
-	
-	# cursor = c.execute("SELECT foodname FROM Foodstore")
-	# names = cursor.fetchall()
-	# names = list(names)
-	# print(names)
+
 
 	print(requested)
 	print(len(requested))
@@ -760,7 +750,7 @@ def finishOrder():
 
 	conn.commit()
 	conn.close()
-	return redirect('/viewAdmin')
+	return redirect('/viewOrder')
 
 					
 @app.route('/viewStats')
